@@ -1,8 +1,12 @@
-import { WinnerModalProps } from "../../../services/types";
+import { useRouter } from "next/navigation";
+import { WinnerModalProps } from "@/services/types";
 
-const WinnerModal = ({ visible, winner, onPlayAgain, onMenu }: WinnerModalProps) => {
+const WinnerModal = ({ visible, winner, onPlayAgain}: WinnerModalProps) => {
   if (!visible) return null;
-
+  const router = useRouter();
+  const exitToMenu = () => {
+    router.push('/');
+  }
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
       <div className="bg-black text-center rounded-xl p-6 w-[80%] max-w-md shadow-2xl">
@@ -20,7 +24,7 @@ const WinnerModal = ({ visible, winner, onPlayAgain, onMenu }: WinnerModalProps)
           </button>
 
           <button
-            onClick={onMenu}
+            onClick={exitToMenu}
             className="bg-blue-600 text-white px-6 py-3 w-full hover:bg-blue-700"
           >
             Main Menu

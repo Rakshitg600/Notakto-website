@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import { PlayerNamesModalProps } from '../../../services/types';
 
 
-const PlayerNamesModal = ({ visible, onSubmit, initialNames }: PlayerNamesModalProps) => {
-  const [player1, setPlayer1] = useState(initialNames?.[0] || 'Player 1');
-  const [player2, setPlayer2] = useState(initialNames?.[1] || 'Player 2');
+const PlayerNamesModal = ({ visible, onSubmit, initialNames = ['Player 1', 'Player 2'] }: PlayerNamesModalProps) => {
+  const [player1, setPlayer1] = useState(initialNames[0] || 'Player 1');
+  const [player2, setPlayer2] = useState(initialNames[1] || 'Player 2');
 
   useEffect(() => {
-    setPlayer1(initialNames?.[0] || 'Player 1');
-    setPlayer2(initialNames?.[1] || 'Player 2');
+    setPlayer1(initialNames[0] || 'Player 1');
+    setPlayer2(initialNames[1] || 'Player 2');
   }, [initialNames]);
 
   const handleSubmit = () => {

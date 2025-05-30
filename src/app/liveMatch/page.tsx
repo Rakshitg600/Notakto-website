@@ -1,11 +1,16 @@
+'use client'
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { LiveProps } from '../../services/types';
+import { useRouter } from "next/navigation";
 
 const SERVER_URL = "https://deciduous-incongruous-herring.glitch.me";
 const socket = io(SERVER_URL);
 
-const LiveMode = ({ onClose }: LiveProps) => {
+const LiveMode = () => {
+    const router=useRouter();
+    const onClose=()=>{
+        router.push('/');
+    }
   const [boards, setBoards] = useState(
     Array(3)
       .fill('')

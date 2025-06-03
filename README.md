@@ -1,24 +1,29 @@
-## 🧠 What is Notakto?
+# Notakto
 
-**Notakto** is a **misère variant of Tic-Tac-Toe**, where:
+## 🧠 How to Play Notakto
 
-* Both players **play as X**.
-* The game is played on **one or more Tic-Tac-Toe boards**.
-* The **last player to complete a three-in-a-row loses**.
-* If you have multiple boards: once a board has a three-in-a-row, it's "dead" (unplayable).
-* The game continues on remaining live boards until a player is forced to move on the last active one and loses.
+**Notakto** is a [** misère and impartial form of tic-tac-toe**][1]. Also known as reverse tic-tac-toe, this variant turns the normal rules of tic-tac-toe on their head. It uses misère rules, which means if you line up three marks in a row, you _lose_. And it's impartial, so both players use **X** and play on one to more grids, or boards.
 
-This turns classic Tic-Tac-Toe into a **zero-sum, strategic game** — it's essentially a variation of **misère Nim**.
+For example, to play notakto on three boards:
+
+1. Player one puts an **X** in any position on any board.
+1. Player two puts an **X** in any other position on any board.
+1. Each player continues putting **X**s until they complete a row or column in a single board. That board is complete.
+1. The player that completes the final board loses.
+
+This turns the classic game of tic-tac-toe into a **zero-sum, strategic game**—similar to [**misère Nim**][2].
+
+![A GIF of two players playing a three board notakto game.](./assets/images/notakto-example-ezgif.gif)
 
 ---
 
-### ⚙️ Game Mechanics
+## ⚙️  Game Mechanics
 
-* **Misère Rule Logic** – Completing the last three-in-a-row results in a loss.
-* **Multi-board Play** – Users can play on 1 to 5 boards.
-* **Configurable Sizes** – Each board can be up to 5x5.
-* **Dead Board Detection** – Boards with a completed line are marked inactive.
-* **Live Board Management** – AI or players skip dead boards.
+* **Misère Rule Logic**: Completing the last three-in-a-row results in a loss.
+* **Multi-board Play**: Users can play on 1 to 5 boards.
+* **Configurable Sizes**: Each board can be up to 5x5.
+* **Dead Board Detection**: Boards with a completed line are marked inactive.
+* **Live Board Management**: AI or players skip dead boards.
 
 ---
 
@@ -103,3 +108,6 @@ This turns classic Tic-Tac-Toe into a **zero-sum, strategic game** — it's esse
 
 ### Reference PPT
 https://drive.google.com/file/d/1QHrSHDZumgNIxZhbl5kNWiP2y36SjO0U/view
+
+[1]: https://en.wikipedia.org/wiki/Tic-tac-toe_variants
+[2]: https://www.hackerrank.com/challenges/misere-nim-1/problem

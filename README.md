@@ -2,14 +2,14 @@
 
 ## 🧠 How to Play Notakto
 
-**Notakto** is a [** misère and impartial form of tic-tac-toe**][1]. Also known as reverse tic-tac-toe, this variant turns the normal rules of tic-tac-toe on their head. It uses misère rules, which means if you line up three marks in a row, you _lose_. And it's impartial, so both players use **X** and play on one to more grids, or boards.
+**Notakto** is a [**misère and impartial form of tic-tac-toe**][1]. Also known as reverse tic-tac-toe, this variant turns the normal rules of tic-tac-toe on their head. It uses misère rules, which means if you line up three marks in a row, you _lose_. And it's impartial, so both players use **X** and play on one to more grids, or boards.
 
 For example, to play notakto on three boards:
 
 1. Player one puts an **X** in any position on any board.
 1. Player two puts an **X** in any other position on any board.
 1. Each player continues putting **X**s until they complete a row or column in a single board. That board is complete.
-1. The player that completes the final board loses.
+1. The players continue completing boards. The player that completes the final board loses.
 
 This turns the classic game of tic-tac-toe into a **zero-sum, strategic game**—similar to [**misère Nim**][2].
 

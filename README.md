@@ -2,47 +2,41 @@
 
 ## :question: What is Notakto?
 
-**Notakto** is a [**misère and impartial form of tic-tac-toe**][1]. Also known as reverse tic-tac-toe, this variant turns the normal rules of tic-tac-toe on their head. It uses misère rules, which means if you line up three marks in a row, you _lose_. And it's impartial, so both players use **X** and play on one to more grids, or boards. This turns tic-tac-toe into a **strategic zero-sum game**—like [**misère Nim**][2].
+**Notakto** is a [**misère and impartial form of tic-tac-toe**][1]. Also known as reverse tic-tac-toe, this variant turns the normal rules of tic-tac-toe on their head. It uses [misère rules][3], which means if you line up three marks in a row, you _lose_. And it's impartial, so both players use **X** and play on one to more grids, or boards. This turns tic-tac-toe into a **strategic zero-sum game**—like [**misère Nim**][2].
 
+## :gear: Game Mechanics
 
-## ⚙️  Game Mechanics
+In this implementation of notakto:
 
-For example, to play notakto on three boards:
+* You can play on one to five boards
+* Boards can be between 2x2 and 5x5 cells
+* The player that completes a row, a column, or the diagonal _loses_ that board.
+* Boards with a complete row, column, or diagonal are inactivated—they become a "dead" board.
+
+For example, to play a game with three 3x3 boards:
 
 1. Player one puts an **X** in any position on any board.
 1. Player two puts an **X** in any other position on any board.
-1. Each player continues putting **X**s until they complete a row or column in a single board. That board is complete.
-1. The players continue completing boards. The player that completes the final board loses.
-
+1. Each player continues putting **X**s until they complete a row, a column, or the diagonal in a single board. That board is complete—players can't place any more **X**s there.
+1. The players continue completing boards. _The player that completes the final board loses_.
 
  Watch the following GIF to see an example game. In the final screen, Player 1 wins because Player 2 completes the final board.
 
 ![A GIF of two players playing a three board notakto game.](./assets/images/notakto-example-ezgif.gif)
 
+## :video_game: Game Modes
 
-* **Misère Rule Logic**: Completing the last three-in-a-row results in a loss.
-* **Multi-board Play**: Users can play on 1 to 5 boards.
-* **Configurable Sizes**: Each board can be up to 5x5.
-* **Dead Board Detection**: Boards with a completed line are marked inactive.
-* **Live Board Management**: AI or players skip dead boards.
+You can play the game in three modes:
 
----
+* **Single Player**: Play against AI with five difficulty levels.
+* **Two Player (Local)**: Play with a friend on the same device.
+* **Live Multiplayer**: Play against other in real-time matches over WebSocket.
 
-### 🎮 Game Modes
-
-1. **Single Player** – Play against AI with 5 difficulty levels.
-2. **Two Player (Local)** – Play with a friend on the same device.
-3. **Live Multiplayer** – Real-time matches over WebSocket.
-
----
-
-### 🧠 AI Engine
+## :brain: AI Engine
 
 * Uses **center-weighted heuristics** and **misère Nim strategy**.
 * Implements perfect play logic at level 5.
 * Easier difficulties add randomness to mimic mistakes.
-
----
 
 ### 🛍️ In-Game Economy
 
@@ -112,3 +106,4 @@ https://drive.google.com/file/d/1QHrSHDZumgNIxZhbl5kNWiP2y36SjO0U/view
 
 [1]: https://en.wikipedia.org/wiki/Tic-tac-toe_variants
 [2]: https://www.hackerrank.com/challenges/misere-nim-1/problem
+[3]: https://en.wikipedia.org/wiki/Mis%C3%A8re

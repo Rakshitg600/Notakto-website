@@ -59,7 +59,7 @@ This project combines several third-party packages to add crucial features to th
 
 * :floppy_disk: [Zustand][4] handles state management.
 * :key: [Firebase Authentication][5] lets users sign in with their Google account.
-* :lock: [Cloud Firestore][6] saves users coins and XP.
+* :lock: [Cloud Firestore][6] saves users' coins and XP.
 * :money_with_wings: [Coinbase Commerce][7] accepts cryptocurrency payments so users can buy extra coins.
 
 ## :art: User interface and experience

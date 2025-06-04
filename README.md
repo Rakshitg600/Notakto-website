@@ -1,6 +1,10 @@
 # Notakto
 
 [![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![Unlicense License][license-shield]][license-url]
 
 ## :question: What's Notakto?
 
@@ -132,4 +136,12 @@ For questions, suggestions, or feedback, open an issue.
 
 <!-- badge links -->
 [contributors-shield]: https://img.shields.io/github/contributors/Rakshitg600/notakto-website.svg?style=for-the-badge
-[contributors-url]: https://github.com/Rakshitg600/contributors/graphs/contributors
+[contributors-url]: https://github.com/Rakshitg600/notakto-website/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Rakshitg600/notakto-website.svg?style=for-the-badge
+[forks-url]: https://github.com/Rakshitg600/notakto-website/network/members
+[stars-shield]: https://img.shields.io/github/stars/Rakshitg600/notakto-website.svg?style=for-the-badge
+[stars-url]: https://github.com/Rakshitg600/notakto-website/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Rakshitg600/notakto-website.svg?style=for-the-badge
+[issues-url]: https://github.com/Rakshitg600/notakto-website/issues
+[license-shield]: https://img.shields.io/github/license/Rakshitg600/notakto-website.svg?style=for-the-badge
+[license-url]: https://github.com/Rakshitg600/notakto-website/blob/master/LICENSE

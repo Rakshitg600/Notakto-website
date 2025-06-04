@@ -1,5 +1,7 @@
 # Notakto
 
+[![Contributors][contributors-shield]][contributors-url]
+
 ## :question: What's Notakto?
 
 **Notakto** is a [**misère and impartial form of tic-tac-toe**][1]. Also known as reverse tic-tac-toe, this variant turns the normal rules of tic-tac-toe on their head. It uses [misère rules][3], which means if you line up three marks in a row, you _lose_. And it's impartial, so both players use **X** and play on one to more grids, or boards. This turns tic-tac-toe into a **strategic zero-sum game**—like [**misère Nim**][2].
@@ -127,3 +129,7 @@ For questions, suggestions, or feedback, open an issue.
 [7]: https://www.coinbase.com/commerce
 [8]: https://drive.google.com/file/d/1QHrSHDZumgNIxZhbl5kNWiP2y36SjO0U/view
 [9]: ./LICENSE
+
+<!-- badge links -->
+[contributors-shield]: https://img.shields.io/github/contributors/Rakshitg600/notakto-website.svg?style=for-the-badge
+[contributors-url]: https://github.com/Rakshitg600/contributors/graphs/contributors

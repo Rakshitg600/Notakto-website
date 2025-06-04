@@ -74,7 +74,7 @@ The game client uses a retro 8-bit theme with nostalgic sound effects. And all f
 
 ## :page_facing_up: Reference Documentation
 
-See the [reference PowerPoint][8] to learn more about the project.
+See the [reference PowerPoint][8] to learn more about the notakto project.
 
 ## :rocket: Planned Features
 
@@ -87,7 +87,7 @@ See the [reference PowerPoint][8] to learn more about the project.
 
 ## :handshake: Contributions
 
-The notakto project welcomes all contributions!
+The notakto project invites everyone to contribute.
 
 If you have a question about the project or an idea on how to improve it, open an issue or create a pull request.
 
@@ -122,7 +122,7 @@ This project is licensed under the MIT License. See [LICENSE][9] for more detail
 
 ## :telephone_receiver: Contact
 
-To ask questions, offer suggestions, or provide feedback, [open an issue][11].
+For questions, suggestions, or feedback, open an issue.
 
 [1]: https://en.wikipedia.org/wiki/Tic-tac-toe_variants
 [2]: https://www.hackerrank.com/challenges/misere-nim-1/problem
@@ -134,7 +134,6 @@ To ask questions, offer suggestions, or provide feedback, [open an issue][11].
 [8]: https://drive.google.com/file/d/1QHrSHDZumgNIxZhbl5kNWiP2y36SjO0U/view
 [9]: ./LICENSE
 [10]: https://socket.io/
-[11]: https://github.com/Rakshitg600/notakto-website/issues/new
 
 <!-- badge links -->
 [contributors-shield]: https://img.shields.io/github/contributors/Rakshitg600/notakto-website.svg?style=for-the-badge

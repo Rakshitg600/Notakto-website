@@ -36,7 +36,7 @@ You can play the game in three modes:
 
 ## :brain: AI Engine
 
-This project's AI engine uses center-weighted heuristics and misère Nim strategies. You can scale the engine from easy (1) to hard (5). At lower difficulties, the engine introduces more randomness in its guesses.
+This project's AI engine uses center-weighted heuristics and misère Nim strategies to play the game. You can scale the engine from easy (1) to hard (5). At lower difficulties, the engine introduces more randomness in its guesses.
 
 ## :sparkler: Coins and Power-ups
 
@@ -64,7 +64,7 @@ This project combines several third-party packages to add crucial features to th
 
 ## :art: User interface and experience
 
-The game client has a retro 8-bit theme with nostalgic sound effects. The client, including the game board animations and actions, works seamlessly on both desktop and mobile browsers.
+The game client uses a retro 8-bit theme with nostalgic sound effects. And all features work seamlessly on both desktop and mobile browsers.
 
 ## :page_facing_up: Reference Documentation
 
@@ -90,20 +90,21 @@ To create a pull request:
 1. Fork the repository.
 1. Create your feature branch in your forked repository.
 
-  ```console
-  git checkout -b feature/MyNewFeature
-  ```
+    ```console
+    git checkout -b feature/MyNewFeature
+    ```
 
 1. Commit your changes.
 
-  ```console
-  git commit -m 'Add my new feature'
-  ```
+    ```console
+    git commit -m 'Add my new feature'
+    ```
+
 1. Push to the branch.
 
-  ```console
-  git push -u origin feature/MyNewFeature
-  ```
+    ```console
+    git push -u origin feature/MyNewFeature
+    ```
 
 1. Open a pull request on this repository.
 

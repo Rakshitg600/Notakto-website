@@ -52,7 +52,7 @@ Get coins for each game you win. Use those coins to purchase power-ups, like **U
 
 Play against others over the internet and climb the public leaderboard (coming soon!). Every win in the Live Match mode earns you XP. The more XP you earn, the higher your position on the leaderboard.
 
-The game client uses WebSocket to connect to a server. The server:
+The game client uses [`Socket.IO`][10] to connect to a server. The server:
 
 * Pairs players in matches
 * Manages rooms that host both players
@@ -133,6 +133,7 @@ For questions, suggestions, or feedback, open an issue.
 [7]: https://www.coinbase.com/commerce
 [8]: https://drive.google.com/file/d/1QHrSHDZumgNIxZhbl5kNWiP2y36SjO0U/view
 [9]: ./LICENSE
+[10]: https://socket.io/
 
 <!-- badge links -->
 [contributors-shield]: https://img.shields.io/github/contributors/Rakshitg600/notakto-website.svg?style=for-the-badge

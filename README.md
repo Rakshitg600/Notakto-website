@@ -66,6 +66,10 @@ This project combines several third-party packages to add crucial features to th
 
 The game client has a retro 8-bit theme with nostalgic sound effects. The client, including the game board animations and actions, works seamlessly on both desktop and mobile browsers.
 
+## :page_facing_up: Reference Documentation
+
+See the [reference PowerPoint][8] to learn more about the notakto app.
+
 ## :rocket: Planned Features
 
 1. Global leaderboard (XP-based)
@@ -75,9 +79,43 @@ The game client has a retro 8-bit theme with nostalgic sound effects. The client
 5. GitOps-style CI/CD to automatically deploy updates
 6. Automated test scripts
 
-## :page_facing_up: Reference Documentation
+## :handshake: How to Contribute
 
-See the [reference PowerPoint][8] to learn more about the notakto app.
+The notakto project invites everyone to contribute.
+
+If you have a question about the project or an idea on how to improve it, open an issue or create a pull request.
+
+To create a pull request:
+
+1. Fork the repository.
+1. Create your feature branch in your forked repository.
+
+  ```console
+  git checkout -b feature/MyNewFeature
+  ```
+
+1. Commit your changes.
+
+  ```console
+  git commit -m 'Add my new feature'
+  ```
+1. Push to the branch.
+
+  ```console
+  git push -u origin feature/MyNewFeature
+  ```
+
+1. Open a pull request on this repository.
+
+A reviewer reviews your pull request. If they approve the request, they merge your changes into the project's `main` branch.
+
+## :balance_scale: License
+
+This project is licensed under the MIT License. See [LICENSE][9] for more details.
+
+## :telephone_receiver: Contact
+
+For questions, suggestions, or feedback, open an issue.
 
 [1]: https://en.wikipedia.org/wiki/Tic-tac-toe_variants
 [2]: https://www.hackerrank.com/challenges/misere-nim-1/problem
@@ -87,3 +125,4 @@ See the [reference PowerPoint][8] to learn more about the notakto app.
 [6]: https://firebase.google.com/products/firestore
 [7]: https://www.coinbase.com/commerce
 [8]: https://drive.google.com/file/d/1QHrSHDZumgNIxZhbl5kNWiP2y36SjO0U/view
+[9]: ./LICENSE

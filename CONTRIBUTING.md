@@ -17,10 +17,7 @@ Always check your changes in the app before you create a pull request.
 
 To check your changes in the app:
 
-1. In this repository's root folder, install the `npm` dependencies from the [`package.json`] file.
-
-    > [!NOTE]
-    > Don't use `npm install` to install packages. The `npm install` command may mutate the `package-lock.json` file.
+1. In this repository's root folder, install the `npm` dependencies from the [`package.json`][5] file.
 
     ```console
     npm ci
@@ -32,16 +29,17 @@ To check your changes in the app:
     npm run dev
     ```
 
+1. Go to [localhost:3000][6] to see the changes.
+
 > [!NOTE]
 > To check changes to **Live Match** features, run the `Socket.IO` server separately:
 >
 > ```bash
 > cd notakto-socket-server
-> npm install
+> npm ci
 > node livematch.js
 > ```
 
----
 
 ## 📦 Project Structure Overview
 
@@ -137,3 +135,5 @@ Thanks again for being part of Notakto 🎮
 [2]: https://docs.github.com/en/get-started/using-github/github-flow
 [3]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks
 [4]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches
+[5]: ./package.json
+[6]: localhost:3000

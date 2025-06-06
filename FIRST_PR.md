@@ -1,8 +1,8 @@
 # 🎉 Your First Pull Request
 
-Welcome to **Notakto**! We're really glad you're here and interested in contributing.
+Welcome to **Notakto**! We're glad you're here and interested in contributing.
 
-Whether you're fixing a bug, improving the UI, or adding a new feature—thank you for your time and interest.
+Whether you're fixing a bug, improving the UI, or adding a new feature—thank you for your time and interest!
 
 ## 🪜 Steps to Make Your First PR
 
@@ -19,29 +19,39 @@ Fork the repository to your personal GitHub account. Then, clone your forked rep
 1. Select **Create fork**.
 1. Open a terminal window and run the following command:
 
-    ```bash
+    ```console
     git clone https://github.com/YOUR_USERNAME/notakto-website.git && cd notakto-website
     ```
 
 This creates a copy of the repository on your computer. This copy is where you make your proposed changes.
 
-### 2. Create a Branch
+### 2. Install the `npm` Packages
+
+Install the needed `npm` packages. You can find the packages in the [`package.json`][6] file.
+
+In the project's root folder, run the following command:
+
+```console
+npm install
+```
+
+### 3. Create a Branch
 
 Create a new branch for your new feature. A new branch keeps your changes separate from the "main" code in the `main` branch.
 
 To create a new branch, run the following command:
 
-```bash
+```console
 git checkout -b feature/MyNewFeature
 ```
 
-### 3. Commit Your Changes
+### 4. Commit Your Changes
 
 Make your changes and [commit][5] them.
 
 To commit all your changes, run the following command:
 
-```bash
+```console
 git commit -ma 'Add my new feature'
 ```
 
@@ -50,18 +60,14 @@ Commits keep track of the repository's change history. Follow these tips to keep
 * Keep commits focused and meaningful. Each commit message should describe one change.
 * Stick to this repository's coding style. To lint changed files, run the following command:
 
-    ```bash
+    ```console
     npm run lint
     ```
 
 * Make sure your changes work. To test your changes, run the following commands:
 
-    ```bash
+    ```console
     npm run dev
-    ```
-
-    ```bash
-    npm run test
     ```
 
 ### 4. Push Your Branch and Open a Pull Request
@@ -70,7 +76,7 @@ Push your updated branch to your forked repository. Then open a pull request fro
 
 1. Push your branch to your forked repository. To do so, run the following command:
 
-    ```bash
+    ```console
     git push -u origin feature/MyNewFeature
     ```
 
@@ -111,3 +117,4 @@ Thanks again—and welcome aboard! 🚀
 [3]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches
 [4]: https://github.com/Rakshitg600/notakto-website
 [5]: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/about-commits
+[6]: ./package.json

@@ -85,6 +85,23 @@ See the [reference PowerPoint][8] to learn more about the project.
 5. GitOps-style CI/CD to automatically deploy updates
 6. Automated test scripts
 
+## 🐳 Running with Docker
+
+For a streamlined setup and to run the application in a containerized environment:
+
+1.  **Ensure Docker and Docker Compose are installed** on your system.
+
+3.  **Build and Run**:
+    Open your terminal in the project root directory and run:
+    ```bash
+    docker-compose up --build
+    ```
+    This command will build the Docker images for the web frontend and the socket server (if they don't exist or if Dockerfiles have changed) and then start the services.
+
+The web application will be accessible at `http://localhost:3000` and the socket server will be running on port `8000`.
+
+To stop the services, press `Ctrl+C` in the terminal where Docker Compose is running, or run `docker-compose down` from another terminal in the project root.
+
 ## :handshake: Contributions
 
 The notakto project welcomes all contributions!

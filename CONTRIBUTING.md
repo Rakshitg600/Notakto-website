@@ -97,17 +97,13 @@ Follow these guidelines as you make your changes:
 * Use separate Zustand stores for coins, XP, player, game, modals, etc.
 * Reuse logic from `services/logic.ts` and `ai.ts` wherever possible
 
-## 🐳 Docker (WIP)
+## 🐳 Docker 
 
-We're adding Docker support!
+To run the application using Docker, use the following command:
 
-To add Docker support, contributors must:
-
-1. Dockerize the Next.js frontend
-2. Use `docker-compose` to include both frontend and socket server
-3. Update `CONTRIBUTING.md` and related docs
-
-You can track the Docker support progress from the [Dockerize Full Notakto App][10] issue.
+```bash
+docker-compose up
+```
 
 ## 🙋 We're Happy to Help
 

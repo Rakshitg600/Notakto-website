@@ -1,0 +1,31 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    restart: always
+    depends_on:
+      - socket-server
+    networks:
+      - app-network
+
+  socket-server:
+    build:
+      context: ./notakto-socket-server
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    command: node livematch.js
+    environment:
+      NODE_ENV: production
+    restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

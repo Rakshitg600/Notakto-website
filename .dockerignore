@@ -1,0 +1,15 @@
+node_modules
+**/node_modules
+.git
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose.yml
+README.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+FIRST_PR.md
+LICENSE
+docs/
+__tests__/
+*.test.ts

@@ -1,38 +1,42 @@
-
 # 🤝 Contributing to Notakto
 
-Welcome, and thank you for considering contributing to **Notakto** — a nostalgic, strategy-focused variant of Tic Tac Toe with multiplayer, AI, and in-game economy support. This guide will help you get started smoothly.
-(check FIRST_PR.md if this is your first time contributing to open source)
----
+Welcome, and thank you for contributing to **Notakto**. Notakto is a nostalgic, strategy-focused variant of tic-tac-toe with multiplayer, AI, and an in-game economy.
 
-## 🛠️ Getting Started
+If this is your first time contributing to an open source project, see the [first PR guide][1].
 
-### 1. Clone the Repo
+## 🛠️ Pull Request Process
 
-```bash
-git clone https://github.com/rakshitg600/notakto-website.git
-cd notakto
-````
+This repository uses the [GitHub flow][2] workflow. It uses [forks][3] and [branches][4] for an easy-to-follow collaborating experience.
 
-### 2. Install Dependencies
+1. Make all changes to a `feature` branch in your forked repository.
+1. Update the `README.md` file or appropriate files in the `docs` folder with your change's details.
+1. Create a pull request with a description of what you changed and why you changed it.
+1. After a reviewer approves and merges your pull request, delete the feature branch from this repository.
 
-```bash
-npm install
-```
+Always check your changes in the app before you create a pull request.
 
-### 3. Run the App
+To check your changes in the app:
 
-```bash
-npm run dev
-```
+1. In this repository's root folder, install the `npm` dependencies from the [`package.json`] file.
 
-> If you're working on **Live Match** features, run the Socket.IO server separately:
+    ```console
+    npm install
+    ```
 
-```bash
-cd notakto-socket-server
-npm install
-node livematch.js
-```
+1. Run the app in the `dev` environment.
+
+    ```console
+    npm run dev
+    ```
+
+> [!NOTE]
+> To check changes to **Live Match** features, run the `Socket.IO` server separately:
+>
+> ```bash
+> cd notakto-socket-server
+> npm install
+> node livematch.js
+> ```
 
 ---
 
@@ -40,11 +44,11 @@ node livematch.js
 
 ```
 src/
-├── app/              # Next.js route-based pages (vsComputer, vsPlayer, liveMatch)
-├── modals/           # Modal components for UI flows
-├── services/         # Core logic, AI engine, Zustand store, Firebase, etc.
-notakto-socket-server/
-├── livematch.js/    # Socket.IO live multiplayer server (Node.js)
+├── app/                   # Next.js route-based pages (vsComputer, vsPlayer, liveMatch)
+├── modals/                # Modal components for UI flows
+├── services/              # Core logic, AI engine, Zustand store, Firebase, etc.
+├── notakto-socket-server/
+├── livematch.js/          # Socket.IO live multiplayer server (Node.js)
 ```
 
 ---
@@ -126,4 +130,7 @@ If something is confusing, that’s a sign we need to improve it — feel free t
 
 Thanks again for being part of Notakto 🎮
 
-```
+[1]: ./FIRST_PR.md
+[2]: https://docs.github.com/en/get-started/using-github/github-flow
+[3]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks
+[4]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches

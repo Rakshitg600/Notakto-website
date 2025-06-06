@@ -130,4 +130,5 @@ Thanks again—and welcome aboard! 🚀
 [4]: https://github.com/Rakshitg600/notakto-website
 [5]: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/about-commits
 [6]: ./package.json
-[7]: localhost:3000
+[7]: http://localhost:3000
+

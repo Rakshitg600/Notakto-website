@@ -19,8 +19,11 @@ To check your changes in the app:
 
 1. In this repository's root folder, install the `npm` dependencies from the [`package.json`] file.
 
+    > [!NOTE]
+    > Don't use `npm install` to install packages. The `npm install` command may mutate the `package-lock.json` file.
+
     ```console
-    npm install
+    npm ci
     ```
 
 1. Run the app in the `dev` environment.

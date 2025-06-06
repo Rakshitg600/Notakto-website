@@ -32,7 +32,7 @@ Install the needed `npm` packages. You can find the packages in the [`package.js
 In the project's root folder, run the following command:
 
 ```console
-npm install
+npm ci
 ```
 
 ### 3. Create a Branch

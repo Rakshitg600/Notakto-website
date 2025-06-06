@@ -43,34 +43,32 @@ To check your changes in the app:
 
 ## 📦 Project Structure Overview
 
-```
+The project has the following structure:
+
+```text
 src/
 ├── app/                   # Next.js route-based pages (vsComputer, vsPlayer, liveMatch)
 ├── modals/                # Modal components for UI flows
 ├── services/              # Core logic, AI engine, Zustand store, Firebase, etc.
-├── notakto-socket-server/
+├── notakto-socket-server/ # Live Match server package
 ├── livematch.js/          # Socket.IO live multiplayer server (Node.js)
 ```
 
----
-
 ## 🧪 Testing
 
-We use **Jest** and **React Testing Library**.
+This project uses [Jest][7] and [React Testing Library][8] for automated testing.
 
-Run all tests:
+To run all tests:
 
 ```bash
 npm run test
 ```
 
-Check coverage:
+To check the project's test coverage:
 
 ```bash
 npm run test -- --coverage
 ```
-
----
 
 ## 📁 Contribution Ideas
 
@@ -83,51 +81,41 @@ You can help in many ways:
 * 🐛 Fix bugs or handle edge cases
 * 🐳 Dockerize app and improve deployment setup
 
-Check the [issues](https://github.com/rakshitg600/notakto-website/issues) tab and milestones for open tasks.
-
----
+Check the [issues][9] tab and milestones for open tasks.
 
 ## 🧹 Code Style & Guidelines
 
+Follow these guidelines as you make your changes:
+
 * Format code with **Prettier**
-* Check with `npm run lint` before commits
-* Use **TypeScript** — avoid `any`
+* Check with `npm run lint` before you add a new commit
+* Use **TypeScript** only
+* Avoid using the `any` type
 * Use `camelCase` for variables and `PascalCase` for components
 * Favor functional components with hooks
-* Keep logic modular and reusable (see `services/` folder)
-
----
-
-## 🔧 Zustand & Services
-
+* Keep logic modular and reusable—for example, see the `services/` folder
 * Use separate Zustand stores for coins, XP, player, game, modals, etc.
-* Try to reuse logic from `services/logic.ts` and `ai.ts` wherever possible
-
----
+* Reuse logic from `services/logic.ts` and `ai.ts` wherever possible
 
 ## 🐳 Docker (WIP)
 
 We're adding Docker support!
 
-Steps:
+To add Docker support, contributors must:
 
 1. Dockerize the Next.js frontend
 2. Use `docker-compose` to include both frontend and socket server
 3. Update `CONTRIBUTING.md` and related docs
 
-Track progress: [#DOCKERIZE](https://github.com/Rakshitg600/notakto-website/issues/13)
-
----
+You can track the Docker support progress from the [Dockerize Full Notakto App][10] issue.
 
 ## 🙋 We're Happy to Help
 
-Please don’t hesitate to ask questions — seriously. Whether you need help setting up, understanding a file, raising an issue, or fixing a bug — you’re absolutely welcome to reach out.
+Please don’t hesitate to ask questions. Whether you need help setting up, understanding a file, raising an issue, or fixing a bug—you’re absolutely welcome to reach out.
 
 > I (the maintainer) am genuinely flattered that you're here. I don’t expect you to understand everything at once, and I’m more than happy to explain anything, support you, or help you get started.
 
-If something is confusing, that’s a sign we need to improve it — feel free to open a discussion or comment anywhere.
-
----
+If something is confusing, that’s a sign we need to improve it—feel free to open a discussion or comment anywhere.
 
 Thanks again for being part of Notakto 🎮
 
@@ -137,3 +125,7 @@ Thanks again for being part of Notakto 🎮
 [4]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches
 [5]: ./package.json
 [6]: localhost:3000
+[7]: https://jestjs.io/
+[8]: https://testing-library.com/docs/react-testing-library/intro/
+[9]: https://github.com/rakshitg600/notakto-website/issues
+[10]: https://github.com/Rakshitg600/notakto-website/issues/13

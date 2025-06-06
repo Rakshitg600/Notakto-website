@@ -66,21 +66,21 @@ Commits keep track of the repository's change history. Follow these tips to keep
 
 * Make sure your changes work.
 
-    To see your changes in the app:
+    * To see your changes in the app:
 
-        1. Run the following command:
+      1. Run the following command:
 
-            ```console
-            npm run dev
-            ```
+          ```console
+          npm run dev
+          ```
 
-        1. Go to [localhost:3000][7].
+      1. Go to [localhost:3000][7].
 
-    To test your changes with automated tests: run the following command:
+    * To test your changes with automated tests: run the following command:
 
-        ```console
-        npm run test
-        ```
+      ```console
+      npm run test
+      ```
 
 ### 4. Push Your Branch and Open a Pull Request
 

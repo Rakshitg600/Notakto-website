@@ -2,7 +2,7 @@
 
 Welcome, and thank you for contributing to **Notakto**. Notakto is a nostalgic, strategy-focused variant of tic-tac-toe with multiplayer, AI, and an in-game economy.
 
-If this is your first time contributing to an open source project, see the [first PR guide][1].
+If this is your first time contributing to an open source project, see [Your First Pull Request][1].
 
 ## 🛠️ Pull Request Process
 

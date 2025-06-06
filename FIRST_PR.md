@@ -76,7 +76,7 @@ Commits keep track of the repository's change history. Follow these tips to keep
 
       1. Go to [localhost:3000][7].
 
-    * To test your changes with automated tests: run the following command:
+    * To test your changes with automated tests, run the following command:
 
       ```console
       npm run test

@@ -64,11 +64,23 @@ Commits keep track of the repository's change history. Follow these tips to keep
     npm run lint
     ```
 
-* Make sure your changes work. To test your changes, run the following commands:
+* Make sure your changes work.
 
-    ```console
-    npm run dev
-    ```
+    To see your changes in the app:
+
+        1. Run the following command:
+
+            ```console
+            npm run dev
+            ```
+
+        1. Go to [localhost:3000][7].
+
+    To test your changes with automated tests: run the following command:
+
+        ```console
+        npm run test
+        ```
 
 ### 4. Push Your Branch and Open a Pull Request
 
@@ -118,3 +130,4 @@ Thanks again—and welcome aboard! 🚀
 [4]: https://github.com/Rakshitg600/notakto-website
 [5]: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/about-commits
 [6]: ./package.json
+[7]: localhost:3000

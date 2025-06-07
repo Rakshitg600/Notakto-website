@@ -85,22 +85,28 @@ See the [reference PowerPoint][8] to learn more about the project.
 5. GitOps-style CI/CD to automatically deploy updates
 6. Automated test scripts
 
-## 🐳 Running with Docker
+## 🐳 Run with Docker
 
 For a streamlined setup and to run the application in a containerized environment:
 
-1.  **Ensure Docker and Docker Compose are installed** on your system.
+1. Download [Docker Desktop][12] and run the program to start Docker Engine.
+1. Open a terminal window in the project's root folder.
+1. Run the following command to build the app:
 
-3.  **Build and Run**:
-    Open your terminal in the project root directory and run:
-    ```bash
-    docker-compose up --build
+    ```console
+    docker compose up --build
     ```
-    This command will build the Docker images for the web frontend and the socket server (if they don't exist or if Dockerfiles have changed) and then start the services.
 
-The web application will be accessible at `http://localhost:3000` and the socket server will be running on port `8000`.
+This command builds the web frontend and the socket server. Then it starts the app service on port `3000` and the server on port `8000`. To access the app, go to [http://localhost:3000][13].
 
-To stop the services, press `Ctrl+C` in the terminal where Docker Compose is running, or run `docker-compose down` from another terminal in the project root.
+To stop the services, do one of the following:
+
+* Go to the terminal where you ran the `docker compose` command and press `Ctrl+C`
+* In another terminal, go to the project's root folder and run the following command:
+
+    ```console
+    docker compose down
+    ```
 
 ## :handshake: Contributions
 
@@ -152,6 +158,8 @@ To ask questions, offer suggestions, or provide feedback, [open an issue][11].
 [9]: ./LICENSE
 [10]: https://socket.io/
 [11]: https://github.com/Rakshitg600/notakto-website/issues/new
+[12]: https://docs.docker.com/desktop/
+[13]: http://localhost:3000
 
 <!-- badge links -->
 [contributors-shield]: https://img.shields.io/github/contributors/Rakshitg600/notakto-website.svg?style=for-the-badge

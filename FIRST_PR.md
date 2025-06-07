@@ -1,10 +1,10 @@
-# 🎉 Your First Pull Request
+# :tada: Your First Pull Request
 
 Welcome to **Notakto**! We're glad you're here and interested in contributing.
 
 Whether you're fixing a bug, improving the UI, or adding a new feature—thank you for your time and interest!
 
-## 🪜 Steps to Make Your First PR
+## :ladder: Steps to Make Your First PR
 
 This repository uses the [GitHub flow][1] workflow. It uses [forks][2] and [branches][3] for an easy-to-follow collaborating experience.
 
@@ -122,7 +122,7 @@ A reviewer reviews your pull request. If they approve the request, they merge yo
 
 Congratulations, you've made your first contribution!
 
-## 💬 Don't Hesitate to Ask
+## :speech_bubble: Don't Hesitate to Ask
 
 Don’t worry if anything seems confusing as you're getting started. If you're stuck on something, just ask!
 
@@ -136,9 +136,9 @@ You’re always welcome to:
 * Ask for help setting up or fixing something
 * Clarify anything technical or non-technical
 
-We’re truly happy to help. Your interest itself means a lot. 😊
+We’re truly happy to help. Your interest itself means a lot. :blush:
 
-Thanks again—and welcome aboard! 🚀
+Thanks again—and welcome aboard! :rocket:
 
 [1]: https://docs.github.com/en/get-started/using-github/github-flow
 [2]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks

@@ -17,7 +17,7 @@ In this implementation of notakto:
 * You can play on one to five boards.
 * Boards can have between 2x2 and 5x5 cells.
 * The player that completes a row, a column, or the diagonal _loses_ that board.
-* Boards with a complete row, column, or diagonal are inactivated—they become a "dead" board.
+* The app deactivates boards with a complete row, column, or diagonal—they become a "dead" board.
 
 For example, to play a game with three 3x3 boards:
 
@@ -46,7 +46,7 @@ This project's AI engine uses center-weighted heuristics and misère Nim strateg
 
 ## :sparkler: Coins and Power-ups
 
-Get coins for each game you win. Use those coins to purchase power-ups, like **Undo Move** and **Skip Move** from the in-game **Settings** menu.
+Get coins for each game you win. Use those coins to buy power-ups, like **Undo Move** and **Skip Move** from the in-game **Settings** menu.
 
 ## :globe_with_meridians: Multiplayer (Live Match)
 
@@ -61,7 +61,7 @@ The game client uses [`Socket.IO`][10] to connect to a server. The server:
 
 ## :package: Third-Party Packages
 
-This project combines several third-party packages to add crucial features to the app:
+This project combines third-party packages to add crucial features to the app:
 
 * :floppy_disk: [Zustand][4] handles state management.
 * :key: [Firebase Authentication][5] lets users sign in with their Google account.
@@ -80,7 +80,7 @@ See the [reference PowerPoint][8] to learn more about the project.
 
 1. Global leaderboard (XP-based)
 2. Friend list and “Play with Friends” mode
-3. Ads integration with remove-ad purchase option
+3. Ads integration with an option to pay to remove them
 4. Crash analytics, logging, and user tracking
 5. GitOps-style CI/CD to automatically deploy updates
 6. Automated test scripts
@@ -139,6 +139,8 @@ To create a pull request:
 
 A reviewer reviews your pull request. If they approve the request, they merge your changes into the project's `main` branch.
 
+To learn more about contributing to this project, see the [Contributing guide][14].
+
 ## :balance_scale: License
 
 This project is licensed under the MIT License. See [LICENSE][9] for more details.
@@ -160,6 +162,7 @@ To ask questions, offer suggestions, or provide feedback, [open an issue][11].
 [11]: https://github.com/Rakshitg600/notakto-website/issues/new
 [12]: https://docs.docker.com/desktop/
 [13]: http://localhost:3000
+[14]: ./CONTRIBUTING.md
 
 <!-- badge links -->
 [contributors-shield]: https://img.shields.io/github/contributors/Rakshitg600/notakto-website.svg?style=for-the-badge
@@ -172,3 +175,4 @@ To ask questions, offer suggestions, or provide feedback, [open an issue][11].
 [issues-url]: https://github.com/Rakshitg600/notakto-website/issues
 [license-shield]: https://img.shields.io/github/license/Rakshitg600/notakto-website.svg?style=for-the-badge
 [license-url]: https://github.com/Rakshitg600/notakto-website/blob/master/LICENSE
+

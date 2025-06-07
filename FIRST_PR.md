@@ -122,7 +122,7 @@ A reviewer reviews your pull request. If they approve the request, they merge yo
 
 Congratulations, you've made your first contribution!
 
-## :speech_bubble: Don't Hesitate to Ask
+## :speech_balloon: Don't Hesitate to Ask
 
 Don’t worry if anything seems confusing as you're getting started. If you're stuck on something, just ask!
 

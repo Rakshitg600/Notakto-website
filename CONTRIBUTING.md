@@ -1,10 +1,10 @@
-# 🤝 Contributing to Notakto
+# :handshake: Contributing to Notakto
 
 Welcome, and thank you for contributing to **Notakto**. Notakto is a nostalgic, strategy-focused variant of tic-tac-toe with multiplayer, AI, and an in-game economy.
 
 If this is your first time contributing to an open source project, see [Your First Pull Request][1].
 
-## 🛠️ Pull Request Process
+## :hammer_and_wrench: Pull Request Process
 
 This repository uses the [GitHub flow][2] workflow. It uses [forks][3] and [branches][4] for an easy-to-follow collaborating experience.
 
@@ -40,7 +40,7 @@ To check your changes in the app:
 
 This command builds the web frontend and the socket server. Then it starts the app service on port `3000` and the server on port `8000`. To access the app, go to [http://localhost:3000][6].
 
-## 📦 Project Structure Overview
+## :package: Project Structure Overview
 
 The project has the following structure:
 
@@ -53,7 +53,7 @@ notakto-socket-server/
 ├── livematch.js/          # Socket.IO live multiplayer server (Node.js)
 ```
 
-## 🧪 Automated tests
+## :test_tube: Automated tests
 
 This project uses [Jest][7] and [React Testing Library][8] for automated testing.
 
@@ -69,19 +69,19 @@ To check the project's test coverage:
 npm run test -- --coverage
 ```
 
-## 📁 Contribution Ideas
+## :bulb: Contribution Ideas
 
 You can help in many ways:
 
-* 📄 Improve documentation
-* 🧠 Optimize AI or game logic
-* 💬 Enhance UI/UX (modals, layout, gameboard)
-* 🧪 Write or improve test coverage
-* 🐛 Fix bugs or handle edge cases
+* :books: Improve documentation
+* :brain: Optimize AI or game logic
+* :speech_balloon: Enhance UI/UX (modals, layout, gameboard)
+* :test_tube: Write or improve test coverage
+* :bug: Fix bugs or handle edge cases
 
 Check the [issues][9] tab and milestones for open tasks.
 
-## 🧹 Code Style & Guidelines
+## :broom: Code Style & Guidelines
 
 Follow these guidelines as you make your changes:
 
@@ -95,7 +95,7 @@ Follow these guidelines as you make your changes:
 * Use separate Zustand stores for coins, XP, player, game, and modals
 * Reuse logic from `services/logic.ts` and `ai.ts` wherever possible
 
-## 🙋 We're Happy to Help
+## :raising_hand: We're Happy to Help
 
 Don’t hesitate to ask questions, whether you need help setting up, understanding a file, raising an issue, or fixing a bug. You’re absolutely welcome to reach out.
 
@@ -103,7 +103,7 @@ Don’t hesitate to ask questions, whether you need help setting up, understandi
 
 If something is confusing, that’s a sign we need to improve it—feel free to open a discussion or comment anywhere.
 
-Thanks again for being part of Notakto! 🎮
+Thanks again for being part of Notakto! :video_game:
 
 [1]: ./FIRST_PR.md
 [2]: https://docs.github.com/en/get-started/using-github/github-flow

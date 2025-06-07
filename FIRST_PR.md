@@ -64,23 +64,21 @@ Commits keep track of the repository's change history. Follow these tips to keep
     npm run lint
     ```
 
-* Make sure your changes work.
+* Make sure your changes work with automated tests. To run the automated tests, run the following command:
 
-    * To see your changes in the app:
+    ```console
+    npm run test
+    ```
 
-      1. Run the following command:
+* See how your changes look in the app. To run a `dev` version of the app with your changes:
 
-          ```console
-          npm run dev
-          ```
+    1. Run the following command:
 
-      1. Go to [localhost:3000][7].
+        ```console
+        npm run dev
+        ```
 
-    * To test your changes with automated tests, run the following command:
-
-      ```console
-      npm run test
-      ```
+    1. Go to [localhost:3000][7].
 
 ### 4. Push Your Branch and Open a Pull Request
 

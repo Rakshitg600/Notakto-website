@@ -85,9 +85,9 @@ See the [reference PowerPoint][8] to learn more about the project.
 5. GitOps-style CI/CD to automatically deploy updates
 6. Automated test scripts
 
-## 🐳 Run with Docker
+## :whale: Run with Docker
 
-For a streamlined setup and to run the application in a containerized environment:
+For a streamlined build experience, run the app in a Docker container:
 
 1. Download [Docker Desktop][12] and run the program to start Docker Engine.
 1. Open a terminal window in the project's root folder.

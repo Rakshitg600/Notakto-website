@@ -112,7 +112,7 @@ To stop the container service, do one of the following:
 
 The notakto project welcomes all contributions!
 
-If you have a question about the project or an idea on how to improve it, open an issue or create a pull request.
+If you have a question about the project or an idea on how to improve it, open an issue and then create a pull request.
 
 To create a pull request:
 

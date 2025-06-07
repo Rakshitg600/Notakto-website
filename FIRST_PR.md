@@ -25,8 +25,36 @@ Fork the repository to your personal GitHub account. Then, clone your forked rep
 
 This creates a copy of the repository on your computer. This copy is where you make your proposed changes.
 
-### 2. Install the `npm` Packages
+### 2. Install Docker Desktop
 
+[Docker Desktop][8] is a desktop application that makes it easy to start and manage Docker containers. This project uses Docker to streamline the build experience. It lets you run the app on your computer without worrying about any extra software infrastructure or prerequisites.
+
+To install Docker Desktop:
+
+1. Go to the [Docker Desktop product page][9].
+1. Scroll to the bottom of the screen and select your operating system from the **Install Docker Desktop** box.
+1. Follow the instructions to download the Docker Desktop application.
+
+To run the app in a Docker container:
+
+1. Download [Docker Desktop][12] and run the program to start Docker Engine.
+1. Open a terminal window in the project's root folder.
+1. Run the following command to build the app:
+
+    ```console
+    docker compose up --build
+    ```
+
+This command builds the web frontend and the socket server. Then it starts the app service on port `3000` and the server on port `8000`. To access the app, go to [http://localhost:3000][13].
+
+To stop the services, do one of the following:
+
+* Go to the terminal where you ran the `docker compose` command and press `Ctrl+C`
+* In another terminal, go to the project's root folder and run the following command:
+
+    ```console
+    docker compose down
+    ```
 Install the needed `npm` packages. You can find the packages in the [`package.json`][6] file.
 
 In the project's root folder, run the following command:
@@ -70,17 +98,30 @@ Commits keep track of the repository's change history. Follow these tips to keep
     npm run test
     ```
 
-* See how your changes look in the app. To run a `dev` version of the app with your changes:
+* See how your changes look in the app. To see your changes in the app:
 
+    1. Start the Docker Desktop application if it's not already started. See [Install Docker Desktop](#install-docker-desktop) to learn more.
     1. Run the following command:
 
         ```console
-        npm run dev
+        docker compose up --build
         ```
 
     1. Go to [localhost:3000][7].
 
-### 4. Push Your Branch and Open a Pull Request
+
+    This command builds the web frontend and the socket server container. Then it starts the container service on port `3000` and the server on port `8000`.
+
+    To stop the container service, do one of the following:
+
+    * Go to the terminal where you ran the `docker compose` command and press `Ctrl+C`
+    * In another terminal, go to the project's root folder and run the following command:
+
+        ```console
+        docker compose down
+        ```
+
+### 5. Push Your Branch and Open a Pull Request
 
 Push your updated branch to your forked repository. Then open a pull request from this repository to merge your changes into the main code base.
 
@@ -129,4 +170,5 @@ Thanks again—and welcome aboard! 🚀
 [5]: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/about-commits
 [6]: ./package.json
 [7]: http://localhost:3000
-
+[8]: https://docs.docker.com/get-started/docker-overview/
+[9]: https://docs.docker.com/desktop/

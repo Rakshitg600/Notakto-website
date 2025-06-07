@@ -89,7 +89,7 @@ See the [reference PowerPoint][8] to learn more about the project.
 
 For a streamlined build experience, run the app in a Docker container:
 
-1. Download [Docker Desktop][12] and run the program to start Docker Engine.
+1. Download your operating system's version of [Docker Desktop][12] and run it to start Docker Engine.
 1. Open a terminal window in the project's root folder.
 1. Run the following command to build the app:
 
@@ -97,9 +97,9 @@ For a streamlined build experience, run the app in a Docker container:
     docker compose up --build
     ```
 
-This command builds the web frontend and the socket server. Then it starts the app service on port `3000` and the server on port `8000`. To access the app, go to [http://localhost:3000][13].
+This command builds the web frontend and the socket server container. Then it starts the container service on port `3000` and the server on port `8000`. To access the app, go to [http://localhost:3000][13].
 
-To stop the services, do one of the following:
+To stop the container service, do one of the following:
 
 * Go to the terminal where you ran the `docker compose` command and press `Ctrl+C`
 * In another terminal, go to the project's root folder and run the following command:

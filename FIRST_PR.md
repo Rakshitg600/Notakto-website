@@ -12,7 +12,7 @@ Follow these steps use the GitHub flow workflow to make your first contribution.
 
 ### 1. Fork and Clone the Repository
 
-Fork the repository to your personal GitHub account. Then, clone your forked repository to your computer.
+Fork the repository to your personal GitHub account. Then, clone your forked repository to your computer. This copy is where you make your proposed changes.
 
 1. Go to the [notakto-website][4] repository.
 1. Select **Fork**.
@@ -20,10 +20,16 @@ Fork the repository to your personal GitHub account. Then, clone your forked rep
 1. Open a terminal window and run the following command:
 
     ```console
-    git clone https://github.com/YOUR_USERNAME/notakto-website.git && cd notakto-website
+    git clone https://github.com/YOUR_USERNAME/notakto-website.git
     ```
 
-This creates a copy of the repository on your computer. This copy is where you make your proposed changes.
+    This creates a copy of the repository on your computer.
+
+1. In your terminal, run the following command go to the project's root folder:
+
+    ```console
+    cd notakto-website
+    ```
 
 ### 2. Install Docker Desktop
 
@@ -34,34 +40,6 @@ To install Docker Desktop:
 1. Go to the [Docker Desktop product page][9].
 1. Scroll to the bottom of the screen and select your operating system from the **Install Docker Desktop** box.
 1. Follow the instructions to download the Docker Desktop application.
-
-To run the app in a Docker container:
-
-1. Download [Docker Desktop][12] and run the program to start Docker Engine.
-1. Open a terminal window in the project's root folder.
-1. Run the following command to build the app:
-
-    ```console
-    docker compose up --build
-    ```
-
-This command builds the web frontend and the socket server. Then it starts the app service on port `3000` and the server on port `8000`. To access the app, go to [http://localhost:3000][13].
-
-To stop the services, do one of the following:
-
-* Go to the terminal where you ran the `docker compose` command and press `Ctrl+C`
-* In another terminal, go to the project's root folder and run the following command:
-
-    ```console
-    docker compose down
-    ```
-Install the needed `npm` packages. You can find the packages in the [`package.json`][6] file.
-
-In the project's root folder, run the following command:
-
-```console
-npm ci
-```
 
 ### 3. Create a Branch
 
@@ -101,14 +79,13 @@ Commits keep track of the repository's change history. Follow these tips to keep
 * See how your changes look in the app. To see your changes in the app:
 
     1. Start the Docker Desktop application if it's not already started. See [Install Docker Desktop](#install-docker-desktop) to learn more.
-    1. Run the following command:
+    1. In your terminal window, run the following command:
 
         ```console
         docker compose up --build
         ```
 
     1. Go to [localhost:3000][7].
-
 
     This command builds the web frontend and the socket server container. Then it starts the container service on port `3000` and the server on port `8000`.
 
@@ -125,7 +102,7 @@ Commits keep track of the repository's change history. Follow these tips to keep
 
 Push your updated branch to your forked repository. Then open a pull request from this repository to merge your changes into the main code base.
 
-1. Push your branch to your forked repository. To do so, run the following command:
+1. Run the following command to push your branch to your forked repository:
 
     ```console
     git push -u origin feature/MyNewFeature
@@ -168,7 +145,6 @@ Thanks again—and welcome aboard! 🚀
 [3]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches
 [4]: https://github.com/Rakshitg600/notakto-website
 [5]: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/about-commits
-[6]: ./package.json
 [7]: http://localhost:3000
 [8]: https://docs.docker.com/get-started/docker-overview/
 [9]: https://docs.docker.com/desktop/

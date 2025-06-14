@@ -1,20 +1,11 @@
-# Use an official Node.js image
-FROM mhart/alpine-node
+FROM node:22-alpine
 
-# Set working directory
+RUN corepack enable
+
 WORKDIR /app
-
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --frozen-lockfile --prod
 COPY . .
 
-# Expose WebSocket server port
 EXPOSE 8000
-
-# Start the WebSocket server
-CMD ["node", "livematch.js"]
+CMD ["pnpm", "start"]

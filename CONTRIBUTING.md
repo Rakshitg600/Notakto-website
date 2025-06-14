@@ -1,10 +1,69 @@
-# :handshake: Contributing to Notakto
+# 🤝 Contributing to Notakto
 
 Welcome, and thank you for contributing to **Notakto**. Notakto is a nostalgic, strategy-focused variant of tic-tac-toe with multiplayer, AI, and an in-game economy.
 
 If this is your first time contributing to an open source project, see [Your First Pull Request][1].
 
-## :hammer_and_wrench: Pull Request Process
+## 🛠️ Development Setup
+
+Assuming you have cloned the repository, follow these steps to set up your development environment:
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [pnpm](https://pnpm.io/installation)
+
+### Quick Start
+
+**Install the Dependencies**
+
+```bash
+pnpm install:all 
+```
+
+**One command to start everything:**
+
+```bash
+pnpm dev:local
+```
+
+This automatically:
+- Installs all dependencies for both main app and socket server
+- Starts Next.js development server (http://localhost:3000)
+- Starts Socket.IO server (http://localhost:8000)
+- Enables hot reload for both servers
+
+**Alternative commands:**
+
+```bash
+# Start only Next.js app
+pnpm dev
+```
+
+> If you're working on **Live Match** features, run the Socket.IO server separately:
+
+```bash
+cd notakto-socket-server && pnpm start
+```
+
+## 🧪 Testing
+
+We use **Jest** and **React Testing Library**.
+
+```bash
+# Run all tests
+pnpm test
+
+# Check coverage
+pnpm test -- --coverage
+
+# Lint code
+pnpm lint
+```
+
+---
+
+## 🔄 Pull Request Process
 
 This repository uses the [GitHub flow][2] workflow. It uses [forks][3] and [branches][4] for an easy-to-follow collaborating experience.
 
@@ -16,33 +75,39 @@ This repository uses the [GitHub flow][2] workflow. It uses [forks][3] and [bran
 
 Always run the project's automated tests and check your changes in the app before you create a pull request.
 
-### Run Automated Tests
+### Quality Assurance
 
-To run the project's automated tests, run the following command:
+Before creating a pull request, ensure your changes meet our quality standards:
 
-```console
-npm run test
+```bash
+# Run automated tests
+pnpm test
+
+# Check code formatting and style
+pnpm lint
+
+# Verify the application runs correctly
+pnpm dev:local
 ```
 
-All tests must pass before you create a pull request.
+All tests must pass and the application must run without errors before you create a pull request.
 
-### Check Your Changes in the App
+### Docker Testing (Optional)
 
-To check your changes in the app:
+To test your changes in a production-like environment:
 
-1. Download [Docker Desktop][11] and run the program to start Docker Engine.
-1. Open a terminal window in the project's root folder.
-1. Run the following command to build the app:
+1. Install [Docker Desktop][11] and start the Docker Engine.
+2. Build and run the application:
 
-    ```console
-    docker compose up --build
+    ```bash
+    docker-compose up --build
     ```
 
-This command builds the web frontend and the socket server. Then it starts the app service on port `3000` and the server on port `8000`. To access the app, go to [http://localhost:3000][6].
+This builds both the web frontend and socket server, then starts the services on ports `3000` and `8000` respectively.
 
-## :package: Project Structure Overview
+## 📦 Project Structure Overview
 
-The project has the following structure:
+The project follows a modern Next.js architecture:
 
 ```text
 src/
@@ -50,26 +115,10 @@ src/
 ├── modals/                # Modal components for UI flows
 ├── services/              # Core logic, AI engine, Zustand store, Firebase, etc.
 notakto-socket-server/
-├── livematch.js/          # Socket.IO live multiplayer server (Node.js)
+├── livematch.js           # Socket.IO live multiplayer server (Node.js)
 ```
 
-## :test_tube: Automated tests
-
-This project uses [Jest][7] and [React Testing Library][8] for automated testing.
-
-To run all the project's tests:
-
-```bash
-npm run test
-```
-
-To check the project's test coverage:
-
-```bash
-npm run test -- --coverage
-```
-
-## :bulb: Contribution Ideas
+## 💡 Contribution Ideas
 
 You can help in many ways:
 
@@ -81,29 +130,63 @@ You can help in many ways:
 
 Check the [issues][9] tab and milestones for open tasks.
 
-## :broom: Code Style & Guidelines
+## 🧹 Code Style & Guidelines
 
-Follow these guidelines as you make your changes:
+Follow these guidelines to maintain code quality and consistency:
 
+### General Standards
 * Format your code with **Prettier**
-* Check your formatting with `npm run lint` before you add a new commit
-* Use **TypeScript** code only
-* Avoid using the `any` type
-* Use `camelCase` for variables and `PascalCase` for components
-* Favor functional components with hooks
-* Keep logic modular and reusable—for example, see the `services/` folder
-* Use separate Zustand stores for coins, XP, player, game, and modals
+* Check your formatting with `pnpm lint` before committing
+* Use **TypeScript** exclusively
+* Avoid using the `any` type - prefer proper type definitions
+* Write meaningful commit messages following conventional commit format
+
+### Naming Conventions
+* Use `camelCase` for variables and functions
+* Use `PascalCase` for components and types
+* Use `UPPER_SNAKE_CASE` for constants
+* Use descriptive names that explain purpose
+
+### Code Organization
+* Favor functional components with hooks over class components
+* Keep logic modular and reusable - see the `services/` folder structure
+* Separate concerns: UI components, business logic, and data management
+* Use custom hooks for reusable stateful logic
+
+### State Management
+* Use separate Zustand stores for different domains (coins, XP, player, game state)
 * Reuse logic from `services/logic.ts` and `ai.ts` wherever possible
+* Keep Firebase operations centralized in `services/firebase.ts`
 
-## :raising_hand: We're Happy to Help
+### Testing
+* Write unit tests for utility functions and business logic
+* Write integration tests for complex user flows
+* Maintain test coverage above 80%
+* Mock external dependencies in tests
 
-Don’t hesitate to ask questions, whether you need help setting up, understanding a file, raising an issue, or fixing a bug. You’re absolutely welcome to reach out.
+## 🙋 We're Happy to Help
 
-> I (the maintainer) am genuinely flattered that you're here. I don’t expect you to understand everything at once, and I’m more than happy to explain anything, support you, or help you get started.
+Don't hesitate to ask questions, whether you need help setting up, understanding a file, raising an issue, or fixing a bug. You're absolutely welcome to reach out.
 
-If something is confusing, that’s a sign we need to improve it—feel free to open a discussion or comment anywhere.
+> **Note:** We don't expect you to understand everything perfectly. In fact, your questions help us improve the project and documentation.
 
-Thanks again for being part of Notakto! :video_game:
+You're always welcome to:
+* Open a draft PR early and ask for feedback
+* Comment on issues for clarification
+* Ask for help with setup or technical issues
+* Request code reviews for learning purposes
+* Suggest improvements to our processes
+
+If something is confusing, that's valuable feedback - feel free to open a discussion or comment anywhere.
+
+## 📚 Additional Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Jest Testing Framework](https://jestjs.io/docs/getting-started)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+
+Thanks again for being part of Notakto! 🎮
 
 [1]: ./FIRST_PR.md
 [2]: https://docs.github.com/en/get-started/using-github/github-flow

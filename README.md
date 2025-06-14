@@ -85,29 +85,42 @@ See the [reference PowerPoint][8] to learn more about the project.
 5. GitOps-style CI/CD to automatically deploy updates
 6. Automated test scripts
 
-## :whale: Run with Docker
+## :whale: Running with Docker
 
-For a streamlined build experience, run the app in a Docker container:
+For a streamlined setup and to run the application in a containerized environment:
 
-1. Download your operating system's version of [Docker Desktop][12] and run it to start Docker Engine.
-1. Open a terminal window in the project's root folder.
-1. Run the following command to build the app:
+1.  *Ensure Docker and Docker Compose are installed* on your system.
 
-    ```console
-    docker compose up --build
+2.  *Build and Run*:
+    Open your terminal in the project root directory and run:
+    ```bash
+    docker-compose up --build
     ```
+    This command will build the Docker images for the web frontend and the socket server (if they don't exist or if Dockerfiles have changed) and then start the services.
 
-This command builds the web frontend and the socket server container. Then it starts the container service on port `3000` and the server on port `8000`. To access the app, go to [http://localhost:3000][13].
+The web application will be accessible at http://localhost:3000 and the socket server will be running on port 8000.
 
-To stop the container service, do one of the following:
 
-* Go to the terminal where you ran the `docker compose` command and press `Ctrl+C`
-* In another terminal, go to the project's root folder and run the following command:
+## 💻 Running Locally
 
-    ```console
-    docker compose down
+For local development without containerization:
+
+1.  *Ensure Node.js and pnpm are installed* on your system.
+
+2.  *Install Dependencies*:
+    ```bash
+    pnpm install
     ```
+    
 
+3.  *Run Development Servers*:
+    ```bash
+    pnpm dev:local
+    ```
+    
+    This command will concurrently start both the web frontend development server and the socket server in local development mode.
+
+The web application will be accessible at http://localhost:3000 and the socket server will be running on port 8000.
 ## :handshake: Contributions
 
 The notakto project welcomes all contributions!

@@ -3,15 +3,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: runner
     ports:
       - "3000:3000"
     environment:
-      NODE_ENV: production
-    restart: always
-    depends_on:
-      - socket-server
-    networks:
-      - app-network
+      - NODE_ENV=production
 
   socket-server:
     build:
@@ -19,12 +15,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    command: node livematch.js
     environment:
-      NODE_ENV: production
-    restart: always
-    networks:
-      - app-network
+      - NODE_ENV=production
 
 networks:
   app-network:

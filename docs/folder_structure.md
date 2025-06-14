@@ -1,3 +1,4 @@
+```text
 src/
 ├── app/
 │   ├── api/
@@ -33,3 +34,4 @@ src/
     ├── sounds.ts
     ├── store.ts
     └── types.ts
+```

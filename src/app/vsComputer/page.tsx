@@ -14,6 +14,8 @@ import DifficultyModal from '../../modals/DifficultyModal';
 import { findBestMove } from '@/services/ai';
 import { calculateRewards } from '@/services/economyUtils';
 
+import { toast } from "react-toastify"; // Imports toast from Toastify
+
 
 const Game = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -128,7 +130,7 @@ const Game = () => {
                 const paymentWindow = window.open(data.paymentUrl, '_blank');
 
                 if (!paymentWindow) {
-                    alert('Popup blocked. Please allow popups and try again.');
+                    toast('Popup blocked. Please allow popups and try again.') // sends a toast message
                     return;
                 }
 
@@ -137,19 +139,18 @@ const Game = () => {
                     data.chargeId,
                     paymentWindow,
                     () => {
-                        alert('✅ Payment successful! 100 coins added to your account.');
-                        setCoins(Coins+100);
+                        toast('✅ Payment successful! 100 coins added to your account.') // sends a toast message
+                        setCoins(Coins + 100);
                     },
                     (reason) => {
-                        alert(`❌ ${reason}`);
+                        toast(`❌ ${reason}`) // sends a toast message
                     }
                 );
             } else {
-                alert('Payment failed: Could not initiate payment');
+                toast("Payment failed: Could not initiate payment") // sends a toast message
             }
         } catch (error) {
-            console.error(error);
-            alert('Payment processing failed');
+            toast("Payment processing failed") // sends a toast message
         } finally {
             setIsProcessingPayment(false);
         }

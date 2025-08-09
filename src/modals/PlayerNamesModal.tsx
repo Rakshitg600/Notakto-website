@@ -1,11 +1,14 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PlayerNamesModalProps } from '../services/types';
-
+import { toast } from "react-toastify";
 
 const PlayerNamesModal = ({ visible, onSubmit, initialNames = ['Player 1', 'Player 2'] }: PlayerNamesModalProps) => {
   const [player1, setPlayer1] = useState(initialNames[0] || 'Player 1');
   const [player2, setPlayer2] = useState(initialNames[1] || 'Player 2');
+
+  const lastClickTimeRef = useRef(0); // track last click time
+  const cooldown = 4000; // 4 seconds
 
   useEffect(() => {
     setPlayer1(initialNames[0] || 'Player 1');
@@ -13,8 +16,12 @@ const PlayerNamesModal = ({ visible, onSubmit, initialNames = ['Player 1', 'Play
   }, [initialNames]);
 
   const handleSubmit = () => {
+    const now = Date.now();
+    if (now - lastClickTimeRef.current < cooldown) return; // block if too soon
+    lastClickTimeRef.current = now;
+
     if (player1.trim().toLowerCase() === player2.trim().toLowerCase()) {
-      alert("Player 1 and Player 2 cannot have the same name.");
+      toast("Player 1 and Player 2 cannot have the same name.");
       return;
     }
     onSubmit(player1 || 'Player 1', player2 || 'Player 2');

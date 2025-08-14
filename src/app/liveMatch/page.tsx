@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
-import { toast } from "react-toastify"; // Imports toast from Toastify
+import { toast } from "react-toastify";
+import { useToastCooldown } from "@/components/hooks/useToastCooldown";
 
 const SERVER_URL = "https://deciduous-incongruous-herring.glitch.me";
 const socket = io(SERVER_URL);
@@ -12,7 +13,8 @@ const LiveMode = () => {
   const router = useRouter();
   const onClose = () => {
     router.push('/');
-  }
+  };
+
   const [boards, setBoards] = useState(
     Array(3)
       .fill('')
@@ -21,6 +23,9 @@ const LiveMode = () => {
   const [isMyTurn, setIsMyTurn] = useState(false);
   const [roomId, setRoomId] = useState("");
   const [gameState, setGameState] = useState<"searching" | "playing">("searching");
+
+  //  Cooldown hook
+  const { canShowToast, triggerToastCooldown } = useToastCooldown(4000);
 
   useEffect(() => {
     socket.connect();
@@ -38,19 +43,25 @@ const LiveMode = () => {
     });
 
     socket.on("gameOver", (data: { loser: string }) => {
-      toast(data.loser === socket.id ? "You Lost!" : "You Won!"); // sends a toast message
+      if (canShowToast()) {
+        toast(data.loser === socket.id ? "You Lost!" : "You Won!");
+        triggerToastCooldown();
+      }
       resetGame();
     });
 
     socket.on("opponentDisconnected", () => {
-      toast("Opponent Disconnected! Searching for new match..."); // sends a toast message
+      if (canShowToast()) {
+        toast("Opponent Disconnected! Searching for new match...");
+        triggerToastCooldown();
+      }
       resetGame();
     });
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [canShowToast, triggerToastCooldown]);
 
   const handleMove = (boardIndex: number, cellIndex: number) => {
     if (!isMyTurn || boards[boardIndex].blocked || boards[boardIndex].grid[cellIndex] !== "" || !roomId) return;

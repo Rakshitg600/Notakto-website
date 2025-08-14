@@ -13,8 +13,8 @@ import { useCoins, useXP } from '@/services/store';
 import DifficultyModal from '../../modals/DifficultyModal';
 import { findBestMove } from '@/services/ai';
 import { calculateRewards } from '@/services/economyUtils';
-
-import { toast } from "react-toastify"; // Imports toast from Toastify
+import { toast } from "react-toastify";
+import { useToastCooldown } from '@/components/hooks/useToastCooldown';
 
 
 const Game = () => {
@@ -39,6 +39,15 @@ const Game = () => {
     const setXP = useXP((state) => state.setXP);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+    const { canShowToast, triggerToastCooldown, resetCooldown } = useToastCooldown(4000);
+
+    const showToast = (message: string) => {
+        if (canShowToast()) {
+            toast(message, { onClose: resetCooldown });
+            triggerToastCooldown();
+        }
+    };
+
     const makeMove = (boardIndex: number, cellIndex: number) => {
         if (boards[boardIndex][cellIndex] !== '' || isBoardDead(boards[boardIndex], boardSize)) return;
 
@@ -55,8 +64,8 @@ const Game = () => {
 
         if (newBoards.every(board => isBoardDead(board, boardSize))) {
             const loser = currentPlayer;
-            const winner = loser === 1 ? 2 : 1;
-            const isHumanWinner = winner === 1;
+            const winnerPlayer = loser === 1 ? 2 : 1;
+            const isHumanWinner = winnerPlayer === 1;
             const rewards = calculateRewards(isHumanWinner, difficulty, numberOfBoards, boardSize);
 
             if (isHumanWinner) {
@@ -65,7 +74,7 @@ const Game = () => {
             } else {
                 setXP(Math.round(XP + rewards.xp * 0.25));
             }
-            const winnerName = winner === 1 ? "You" : "Computer";
+            const winnerName = winnerPlayer === 1 ? "You" : "Computer";
             setWinner(winnerName);
             setShowWinnerModal(true);
             playWinSound(mute);
@@ -82,12 +91,14 @@ const Game = () => {
         setGameHistory([initialBoards]);
         setShowWinnerModal(false);
     };
+
     const handleBoardConfigChange = (num: number, size: number) => {
         setNumberOfBoards(Math.min(5, Math.max(1, num)));
         setBoardSize(size as BoardSize);
         setShowBoardConfig(false);
         resetGame(num, size as BoardSize);
     };
+
     const handleUndo = () => {
         if (gameHistory.length >= 3) {
             if (Coins >= 100) {
@@ -95,23 +106,24 @@ const Game = () => {
                 setBoards(gameHistory[gameHistory.length - 3]);
                 setGameHistory(h => h.slice(0, -2));
             } else {
-                console.log('Insufficient Coins', 'You need at least 100 coins to undo!');
+                showToast('❌ Insufficient Coins! You need at least 100 coins to undo.');
             }
         } else {
-            console.log('No Moves', 'There are no moves to undo!');
+            showToast('⚠️ No moves to undo!');
         }
     };
+
     const handleSkip = () => {
         if (Coins >= 200) {
             setCoins(Coins - 200);
             setCurrentPlayer(prev => prev === 1 ? 2 : 1);
         } else {
-            console.log('Insufficient Coins', 'You need at least 200 coins to skip a move!');
+            showToast('❌ Insufficient Coins! You need at least 200 coins to skip.');
         }
     };
+
     const handleBuyCoins = async (): Promise<void> => {
         setIsProcessingPayment(true);
-
         try {
             const response = await fetch('/api/create-payment', {
                 method: 'POST',
@@ -123,34 +135,30 @@ const Game = () => {
                     customerName: "Test User"
                 })
             });
-
             const data = await response.json();
 
             if (data.success) {
                 const paymentWindow = window.open(data.paymentUrl, '_blank');
 
                 if (!paymentWindow) {
-                    toast('Popup blocked. Please allow popups and try again.') // sends a toast message
+                    showToast('❌ Popup blocked. Please allow popups and try again.');
                     return;
                 }
 
-                // Start polling for payment status
                 checkPaymentStatus(
                     data.chargeId,
                     paymentWindow,
                     () => {
-                        toast('✅ Payment successful! 100 coins added to your account.') // sends a toast message
+                        showToast('✅ Payment successful! 100 coins added.');
                         setCoins(Coins + 100);
                     },
-                    (reason) => {
-                        toast(`❌ ${reason}`) // sends a toast message
-                    }
+                    (reason) => showToast(`❌ ${reason}`)
                 );
             } else {
-                toast("Payment failed: Could not initiate payment") // sends a toast message
+                showToast("❌ Payment failed: Could not initiate payment");
             }
         } catch (error) {
-            toast("Payment processing failed") // sends a toast message
+            showToast("❌ Payment processing failed");
         } finally {
             setIsProcessingPayment(false);
         }
@@ -168,11 +176,9 @@ const Game = () => {
                 onFailure("Payment was manually cancelled.");
                 return;
             }
-
             try {
                 const response = await fetch(`/api/order-status/${chargeId}`);
                 const data = await response.json();
-
                 if (data.status === 'paid' || data.status === 'confirmed') {
                     clearInterval(intervalId);
                     paymentWindow?.close();
@@ -188,25 +194,19 @@ const Game = () => {
         }, 3000);
     };
 
-
-
     const router = useRouter();
-    const exitToMenu = () => {
-        router.push('/');
-    }
+    const exitToMenu = () => router.push('/');
 
     useEffect(() => {
         resetGame(numberOfBoards, boardSize);
     }, []);
-    // AI Move Handler
+
     useEffect(() => {
         if (currentPlayer === 2) {
             const timeout = setTimeout(() => {
                 try {
                     const move = findBestMove(boards, difficulty, boardSize, numberOfBoards);
-                    if (move) {
-                        makeMove(move.boardIndex, move.cellIndex);
-                    }
+                    if (move) makeMove(move.boardIndex, move.cellIndex);
                 } catch (error) {
                     console.error("Error finding the best move:", error);
                 }
@@ -220,11 +220,10 @@ const Game = () => {
             <div className="flex-1">
                 <div className="flex flex-col items-center px-6 py-4 -mb-8">
                     <div className="flex flex-row justify-center items-center -mt-2">
-                        <span className="text-red-600 text-[35px] ">Coins: {Coins}</span>
-                        <span className="text-red-600 text-[35px] "> | XP: {XP}</span>
+                        <span className="text-red-600 text-[35px]">Coins: {Coins}</span>
+                        <span className="text-red-600 text-[35px]"> | XP: {XP}</span>
                     </div>
-
-                    <h2 className="text-red-600 text-[80px] mb-5 text-center">{currentPlayer == 1 ? "You" : "Computer"}</h2>
+                    <h2 className="text-red-600 text-[80px] mb-5 text-center">{currentPlayer === 1 ? "You" : "Computer"}</h2>
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-4 p-4 w-full mb-20">
@@ -249,77 +248,26 @@ const Game = () => {
             {isMenuOpen && (
                 <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-60 z-[9999] flex items-center justify-center px-4 overflow-y-auto">
                     <div className="flex flex-wrap justify-center gap-4 max-w-4xl py-8">
-                        <button onClick={() => {
-                            resetGame(numberOfBoards, boardSize);
-                            setIsMenuOpen(false);
-                        }} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Reset
-                        </button>
-                        <button onClick={() => {
-                            setShowBoardConfig(!showBoardConfig);
-                            setIsMenuOpen(false);
-                        }
-                        } className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Game Configuration
-                        </button>
-                        <button
-                            onClick={() => {
-                                handleUndo();
-                                setIsMenuOpen(false);
-                            }}
-                            disabled={Coins < 100}
-                            className={`w-full sm:w-[45%] py-4 text-white text-[30px] ${Coins < 100 ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}
-                        >
-                            Undo (100 coins)
-                        </button>
-                        <button
-                            onClick={() => {
-                                handleSkip();
-                                setIsMenuOpen(false);
-                            }}
-                            disabled={Coins < 200}
-                            className={`w-full sm:w-[45%] py-4 text-white text-[30px] ${Coins < 200 ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}
-                        >
-                            Skip a Move (200 coins)
-                        </button>
-                        <button
-                            onClick={handleBuyCoins}
-                            disabled={isProcessingPayment}
-                            className={`w-full sm:w-[45%] flex justify-center items-center gap-2 py-4 text-white text-[30px] ${isProcessingPayment ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}
-                        >
+                        <button onClick={() => { resetGame(numberOfBoards, boardSize); setIsMenuOpen(false); }} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">Reset</button>
+                        <button onClick={() => { setShowBoardConfig(!showBoardConfig); setIsMenuOpen(false); }} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">Game Configuration</button>
+                        <button onClick={() => { handleUndo(); setIsMenuOpen(false); }} disabled={Coins < 100} className={`w-full sm:w-[45%] py-4 text-white text-[30px] ${Coins < 100 ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}>Undo (100 coins)</button>
+                        <button onClick={() => { handleSkip(); setIsMenuOpen(false); }} disabled={Coins < 200} className={`w-full sm:w-[45%] py-4 text-white text-[30px] ${Coins < 200 ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}>Skip a Move (200 coins)</button>
+                        <button onClick={handleBuyCoins} disabled={isProcessingPayment} className={`w-full sm:w-[45%] flex justify-center items-center gap-2 py-4 text-white text-[30px] ${isProcessingPayment ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}>
                             {isProcessingPayment && <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />}
                             {isProcessingPayment ? 'Processing...' : 'Buy Coins (100)'}
                         </button>
-                        <button onClick={() => {
-                            setShowDifficultyModal(true);
-                            setIsMenuOpen(false);
-                        }}
-                            className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]"
-                        >
-                            AI Level: {difficulty}
-                        </button>
-                        <button onClick={() => setMute(!mute)} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Sound: {mute ? 'Off' : 'On'}
-                        </button>
-                        <button onClick={exitToMenu} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Main Menu
-                        </button>
-                        <button onClick={toggleMenu} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Return to Game
-                        </button>
+                        <button onClick={() => { setShowDifficultyModal(true); setIsMenuOpen(false); }} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">AI Level: {difficulty}</button>
+                        <button onClick={() => setMute(!mute)} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">Sound: {mute ? 'Off' : 'On'}</button>
+                        <button onClick={exitToMenu} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">Main Menu</button>
+                        <button onClick={toggleMenu} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">Return to Game</button>
                     </div>
                 </div>
             )}
             <WinnerModal
                 visible={showWinnerModal}
                 winner={winner}
-                onPlayAgain={() => {
-                    setShowWinnerModal(false);
-                    resetGame(numberOfBoards, boardSize);
-                }}
-                onMenu={() => {
-                    setShowWinnerModal(false);
-                }}
+                onPlayAgain={() => { setShowWinnerModal(false); resetGame(numberOfBoards, boardSize); }}
+                onMenu={() => { setShowWinnerModal(false); }}
             />
             <BoardConfigModal
                 visible={showBoardConfig}
@@ -330,11 +278,7 @@ const Game = () => {
             />
             <DifficultyModal
                 visible={showDifficultyModal}
-                onSelect={(level) => {
-                    setDifficulty(level as DifficultyLevel);
-                    setShowDifficultyModal(false);
-                    resetGame(numberOfBoards, boardSize);
-                }}
+                onSelect={(level) => { setDifficulty(level as DifficultyLevel); setShowDifficultyModal(false); resetGame(numberOfBoards, boardSize); }}
                 onClose={() => setShowDifficultyModal(false)}
             />
         </div>

@@ -1,343 +1,135 @@
 'use client'
-
-import { useEffect, useState } from 'react';
-import Board from './Board';
-import { BoardSize, BoardState, DifficultyLevel } from '@/services/types';
-import { isBoardDead } from '@/services/logic';
-import { playMoveSound, playWinSound } from '@/services/sounds';
-import { useMute } from '@/services/store';
-import { useRouter } from 'next/navigation';
-import WinnerModal from '../../modals/WinnerModal';
-import BoardConfigModal from '../../modals/BoardConfigModal';
-import { useCoins, useXP } from '@/services/store';
-import DifficultyModal from '../../modals/DifficultyModal';
-import { findBestMove } from '@/services/ai';
-import { calculateRewards } from '@/services/economyUtils';
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+import { useRouter } from "next/navigation";
+import clsx from "clsx";
 import { toast } from "react-toastify";
+import { useToastCooldown } from "@/components/hooks/useToastCooldown";
 
+const SERVER_URL = "https://deciduous-incongruous-herring.glitch.me";
+const socket = io(SERVER_URL);
 
-const Game = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [boards, setBoards] = useState<BoardState[]>([]);
-    const [boardSize, setBoardSize] = useState<BoardSize>(3);
-    const [gameHistory, setGameHistory] = useState<BoardState[][]>([]);
-    const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(1);
-    const [winner, setWinner] = useState<string>('');
-    const [showWinnerModal, setShowWinnerModal] = useState<boolean>(false);
-    const [numberOfBoards, setNumberOfBoards] = useState<number>(3);
-    const [showBoardConfig, setShowBoardConfig] = useState<boolean>(false);
-    const [isProcessingPayment, setIsProcessingPayment] = useState<boolean>(false);
-    const [showDifficultyModal, setShowDifficultyModal] = useState<boolean>(false);
-    const [difficulty, setDifficulty] = useState<DifficultyLevel>(1);
+const LiveMode = () => {
+  const router = useRouter();
+  const onClose = () => {
+    router.push('/');
+  };
 
-    const mute = useMute((state) => state.mute);
-    const setMute = useMute((state) => state.setMute);
-    const Coins = useCoins((state) => state.coins);
-    const setCoins = useCoins((state) => state.setCoins);
-    const XP = useXP((state) => state.XP);
-    const setXP = useXP((state) => state.setXP);
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const [boards, setBoards] = useState(
+    Array(3)
+      .fill('')
+      .map(() => ({ grid: Array(9).fill(""), blocked: false }))
+  );
+  const [isMyTurn, setIsMyTurn] = useState(false);
+  const [roomId, setRoomId] = useState("");
+  const [gameState, setGameState] = useState<"searching" | "playing">("searching");
 
-    const makeMove = (boardIndex: number, cellIndex: number) => {
-        if (boards[boardIndex][cellIndex] !== '' || isBoardDead(boards[boardIndex], boardSize)) return;
+  // cooldown hook (4s same as others)
+  const { canShowToast, triggerToastCooldown, resetCooldown } = useToastCooldown(4000);
 
-        const newBoards = boards.map((board, idx) =>
-            idx === boardIndex ? [
-                ...board.slice(0, cellIndex),
-                'X',
-                ...board.slice(cellIndex + 1)
-            ] : [...board]
-        );
-        playMoveSound(mute);
-        setBoards(newBoards);
-        setGameHistory([...gameHistory, newBoards]);
+  useEffect(() => {
+    socket.connect();
+    socket.emit("joinGame");
 
-        if (newBoards.every(board => isBoardDead(board, boardSize))) {
-            const loser = currentPlayer;
-            const winner = loser === 1 ? 2 : 1;
-            const isHumanWinner = winner === 1;
-            const rewards = calculateRewards(isHumanWinner, difficulty, numberOfBoards, boardSize);
+    socket.on("gameStart", (data: { roomId: string; firstTurn: string }) => {
+      setRoomId(data.roomId);
+      setGameState("playing");
+      setIsMyTurn(socket.id === data.firstTurn);
+    });
 
-            if (isHumanWinner) {
-                setCoins(Coins + rewards.coins);
-                setXP(XP + rewards.xp);
-            } else {
-                setXP(Math.round(XP + rewards.xp * 0.25));
-            }
-            const winnerName = winner === 1 ? "You" : "Computer";
-            setWinner(winnerName);
-            setShowWinnerModal(true);
-            playWinSound(mute);
-            return;
-        }
+    socket.on("updateBoards", (data: { boards: any[]; nextTurn: string }) => {
+      setBoards(data.boards);
+      setIsMyTurn(socket.id === data.nextTurn);
+    });
 
-        setCurrentPlayer(prev => prev === 1 ? 2 : 1);
+    socket.on("gameOver", (data: { loser: string }) => {
+      if (canShowToast()) {
+        toast(data.loser === socket.id ? "You Lost!" : "You Won!", {
+          autoClose: 4500,
+          onClose: resetCooldown,
+        });
+        triggerToastCooldown();
+      }
+      resetGame();
+    });
+
+    socket.on("opponentDisconnected", () => {
+      if (canShowToast()) {
+        toast("Opponent Disconnected! Searching for new match...", {
+          autoClose: 4500,
+          onClose: resetCooldown,
+        });
+        triggerToastCooldown();
+      }
+      resetGame();
+    });
+
+    return () => {
+      socket.disconnect();
     };
+  }, []);
 
-    const resetGame = (num: number, size: BoardSize) => {
-        const initialBoards = Array(num).fill(null).map(() => Array(size * size).fill(''));
-        setBoards(initialBoards);
-        setCurrentPlayer(1);
-        setGameHistory([initialBoards]);
-        setShowWinnerModal(false);
-    };
-    const handleBoardConfigChange = (num: number, size: number) => {
-        setNumberOfBoards(Math.min(5, Math.max(1, num)));
-        setBoardSize(size as BoardSize);
-        setShowBoardConfig(false);
-        resetGame(num, size as BoardSize);
-    };
-    const handleUndo = () => {
-        if (gameHistory.length >= 3) {
-            if (Coins >= 100) {
-                setCoins(Coins - 100);
-                setBoards(gameHistory[gameHistory.length - 3]);
-                setGameHistory(h => h.slice(0, -2));
-            } else {
-                console.log('Insufficient Coins', 'You need at least 100 coins to undo!');
-            }
-        } else {
-            console.log('No Moves', 'There are no moves to undo!');
-        }
-    };
-    const handleSkip = () => {
-        if (Coins >= 200) {
-            setCoins(Coins - 200);
-            setCurrentPlayer(prev => prev === 1 ? 2 : 1);
-        } else {
-            console.log('Insufficient Coins', 'You need at least 200 coins to skip a move!');
-        }
-    };
-    const handleBuyCoins = async (): Promise<void> => {
-        setIsProcessingPayment(true);
+  const handleMove = (boardIndex: number, cellIndex: number) => {
+    if (!isMyTurn || boards[boardIndex].blocked || boards[boardIndex].grid[cellIndex] !== "" || !roomId) return;
+    socket.emit("makeMove", { roomId, boardIndex, cellIndex });
+  };
 
-        try {
-            const response = await fetch('/api/create-payment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    amount: "1.00",
-                    currency: "INR",
-                    customerId: "user_123",
-                    customerName: "Test User"
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                const paymentWindow = window.open(data.paymentUrl, '_blank');
-
-                if (!paymentWindow) {
-                    toast('Popup blocked. Please allow popups and try again.', {autoClose:4500})
-                    return;
-                }
-
-                // Start polling for payment status
-                checkPaymentStatus(
-                    data.chargeId,
-                    paymentWindow,
-                    () => {
-                        toast('✅ Payment successful! 100 coins added to your account.',{autoClose:4500});
-                        setCoins(Coins + 100);
-                    },
-                    (reason) => {
-                        toast(`❌ ${reason}`,{autoClose:4500})
-                    }
-                );
-            } else {
-                toast("Payment failed: Could not initiate payment",{autoClose:4500})
-            }
-        } catch (error) {
-            toast("Payment processing failed", {autoClose:4500})
-        } finally {
-            setIsProcessingPayment(false);
-        }
-    };
-
-    const checkPaymentStatus = async (
-        chargeId: string,
-        paymentWindow: Window | null,
-        onSuccess: () => void,
-        onFailure: (reason: string) => void
-    ): Promise<void> => {
-        const intervalId = setInterval(async () => {
-            if (paymentWindow?.closed) {
-                clearInterval(intervalId);
-                onFailure("Payment was manually cancelled.");
-                return;
-            }
-
-            try {
-                const response = await fetch(`/api/order-status/${chargeId}`);
-                const data = await response.json();
-
-                if (data.status === 'paid' || data.status === 'confirmed') {
-                    clearInterval(intervalId);
-                    paymentWindow?.close();
-                    onSuccess();
-                } else if (data.status === 'expired' || data.status === 'canceled') {
-                    clearInterval(intervalId);
-                    paymentWindow?.close();
-                    onFailure("Payment expired or failed.");
-                }
-            } catch (err) {
-                console.error("Failed to check payment status:", err);
-            }
-        }, 3000);
-    };
-
-
-
-    const router = useRouter();
-    const exitToMenu = () => {
-        router.push('/');
-    }
-
-    useEffect(() => {
-        resetGame(numberOfBoards, boardSize);
-    }, []);
-    // AI Move Handler
-    useEffect(() => {
-        if (currentPlayer === 2) {
-            const timeout = setTimeout(() => {
-                try {
-                    const move = findBestMove(boards, difficulty, boardSize, numberOfBoards);
-                    if (move) {
-                        makeMove(move.boardIndex, move.cellIndex);
-                    }
-                } catch (error) {
-                    console.error("Error finding the best move:", error);
-                }
-            }, 500);
-            return () => clearTimeout(timeout);
-        }
-    }, [currentPlayer, boards, difficulty, boardSize, numberOfBoards]);
-
-    return (
-        <div className="flex flex-col min-h-screen bg-black relative">
-            <div className="flex-1">
-                <div className="flex flex-col items-center px-6 py-4 -mb-8">
-                    <div className="flex flex-row justify-center items-center -mt-2">
-                        <span className="text-red-600 text-[35px] ">Coins: {Coins}</span>
-                        <span className="text-red-600 text-[35px] "> | XP: {XP}</span>
-                    </div>
-
-                    <h2 className="text-red-600 text-[80px] mb-5 text-center">{currentPlayer == 1 ? "You" : "Computer"}</h2>
-                </div>
-
-                <div className="flex flex-wrap justify-center gap-4 p-4 w-full mb-20">
-                    {boards.map((board, index) => (
-                        <div key={index} className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.3%-1.5rem)]" style={{ maxWidth: '400px' }}>
-                            <Board
-                                boardIndex={index}
-                                boardState={board}
-                                makeMove={makeMove}
-                                isDead={isBoardDead(board, boardSize)}
-                                boardSize={boardSize}
-                            />
-                        </div>
-                    ))}
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center bg-blue-600 px-6 py-2 mt-2">
-                    <button onClick={toggleMenu} className="text-white text-[35px]">Settings</button>
-                </div>
-            </div>
-
-            {isMenuOpen && (
-                <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-60 z-[9999] flex items-center justify-center px-4 overflow-y-auto">
-                    <div className="flex flex-wrap justify-center gap-4 max-w-4xl py-8">
-                        <button onClick={() => {
-                            resetGame(numberOfBoards, boardSize);
-                            setIsMenuOpen(false);
-                        }} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Reset
-                        </button>
-                        <button onClick={() => {
-                            setShowBoardConfig(!showBoardConfig);
-                            setIsMenuOpen(false);
-                        }
-                        } className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Game Configuration
-                        </button>
-                        <button
-                            onClick={() => {
-                                handleUndo();
-                                setIsMenuOpen(false);
-                            }}
-                            disabled={Coins < 100}
-                            className={`w-full sm:w-[45%] py-4 text-white text-[30px] ${Coins < 100 ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}
-                        >
-                            Undo (100 coins)
-                        </button>
-                        <button
-                            onClick={() => {
-                                handleSkip();
-                                setIsMenuOpen(false);
-                            }}
-                            disabled={Coins < 200}
-                            className={`w-full sm:w-[45%] py-4 text-white text-[30px] ${Coins < 200 ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}
-                        >
-                            Skip a Move (200 coins)
-                        </button>
-                        <button
-                            onClick={handleBuyCoins}
-                            disabled={isProcessingPayment}
-                            className={`w-full sm:w-[45%] flex justify-center items-center gap-2 py-4 text-white text-[30px] ${isProcessingPayment ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600'}`}
-                        >
-                            {isProcessingPayment && <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />}
-                            {isProcessingPayment ? 'Processing...' : 'Buy Coins (100)'}
-                        </button>
-                        <button onClick={() => {
-                            setShowDifficultyModal(true);
-                            setIsMenuOpen(false);
-                        }}
-                            className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]"
-                        >
-                            AI Level: {difficulty}
-                        </button>
-                        <button onClick={() => setMute(!mute)} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Sound: {mute ? 'Off' : 'On'}
-                        </button>
-                        <button onClick={exitToMenu} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Main Menu
-                        </button>
-                        <button onClick={toggleMenu} className="w-full sm:w-[45%] bg-blue-600 py-4 text-white text-[30px]">
-                            Return to Game
-                        </button>
-                    </div>
-                </div>
-            )}
-            <WinnerModal
-                visible={showWinnerModal}
-                winner={winner}
-                onPlayAgain={() => {
-                    setShowWinnerModal(false);
-                    resetGame(numberOfBoards, boardSize);
-                }}
-                onMenu={() => {
-                    setShowWinnerModal(false);
-                }}
-            />
-            <BoardConfigModal
-                visible={showBoardConfig}
-                currentBoards={numberOfBoards}
-                currentSize={boardSize}
-                onConfirm={handleBoardConfigChange}
-                onCancel={() => setShowBoardConfig(false)}
-            />
-            <DifficultyModal
-                visible={showDifficultyModal}
-                onSelect={(level) => {
-                    setDifficulty(level as DifficultyLevel);
-                    setShowDifficultyModal(false);
-                    resetGame(numberOfBoards, boardSize);
-                }}
-                onClose={() => setShowDifficultyModal(false)}
-            />
-        </div>
+  const resetGame = () => {
+    setBoards(
+      Array(3)
+        .fill('')
+        .map(() => ({ grid: Array(9).fill(""), blocked: false }))
     );
+    setGameState("searching");
+    socket.emit("joinGame");
+  };
+
+  return (
+    <div className="flex flex-col h-screen bg-black">
+      <div className="flex-1 flex flex-col justify-center items-center px-4">
+        {gameState === "playing" ? (
+          <>
+            <h1 className="text-5xl text-red-600 mb-6">
+              {isMyTurn ? "Your Turn" : "Opponent's Turn"}
+            </h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-10">
+              {boards.map((board, boardIndex) => (
+                <div
+                  key={boardIndex}
+                  className={clsx(
+                    "w-[300px] h-[300px] flex flex-wrap bg-black",
+                    board.blocked && "opacity-50"
+                  )}
+                >
+                  {board.grid.map((cell, cellIndex) => (
+                    <button
+                      key={cellIndex}
+                      onClick={() => handleMove(boardIndex, cellIndex)}
+                      disabled={!isMyTurn || board.blocked || cell !== ""}
+                      className="w-1/3 h-1/3 border border-gray-300 flex items-center justify-center bg-black"
+                    >
+                      <span className="text-[100px] text-red-600">{cell}</span>
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center gap-5">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-white text-2xl">Searching for opponent...</p>
+          </div>
+        )}
+      </div>
+      <div className="w-full bg-red-600 py-3 text-center mt-auto">
+        <button onClick={onClose} className="text-white text-2xl">
+          Leave
+        </button>
+      </div>
+    </div>
+  );
 };
 
-export default Game;
+export default LiveMode;
+ 

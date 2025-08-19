@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { toast } from "react-toastify";
 
-const SERVER_URL = "https://deciduous-incongruous-herring.glitch.me";
+const SERVER_URL = "https://notakto-websocket.onrender.com";
 const socket = io(SERVER_URL);
 
 const LiveMode = () => {

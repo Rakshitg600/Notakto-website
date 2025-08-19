@@ -5,7 +5,10 @@ import { Server } from "socket.io";
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
-  cors: { origin: "*", methods: ["GET", "POST"] },
+  cors: {
+    origin: ["https://notakto-website.vercel.app","https://paradox-xx.vercel.app",], 
+    methods: ["GET", "POST"],
+  },
 });
 
 const rooms = new Map();

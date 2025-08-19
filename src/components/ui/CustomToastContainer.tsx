@@ -1,12 +1,12 @@
 'use client';
 
-import { ToastContainer, ToastContainerProps } from 'react-toastify';
+import { ToastContainer, ToastContainerProps, CloseButton } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { VT323 } from "next/font/google";
 
 const vt323 = VT323({
-  weight: "400", 
-  subsets: ["latin"],
+    weight: "400",
+    subsets: ["latin"],
 });
 
 type CustomToastContainerProps = Omit<ToastContainerProps, 'toastClassName'> & {
@@ -27,20 +27,31 @@ export function CustomToastContainer({
     ...rest
 }: CustomToastContainerProps = {}) {
     return (
-        <ToastContainer //many more props available
-            position={position} 
-            autoClose={autoClose}        // Time for which the toast will be visible 
-            hideProgressBar={hideProgressBar}  // progress bar for cool down will be hidden
-            newestOnTop={newestOnTop}     // older toasts stay on top
-            closeOnClick={closeOnClick}    // Closes the toast on click
-            pauseOnFocusLoss={pauseOnFocusLoss} // cool down time pauses when tab or window is switched
-            draggable={draggable}        // toast can be dragged
-            pauseOnHover={pauseOnHover}     // The Toast Notification pauses on hover
-            closeButton={closeButton}     // Close (X) button to manually close the toast
-            toastClassName={toastClassName||(() =>
-                `${vt323.className} text-[22px] text-center w-[300px] bg-black text-white font-mono border border-blue-500 rounded-md px-4 py-3 shadow-[0_0_12px_#00ffff] tracking-wider`
-                )}
-            {...rest} // Spread the rest of the props
+        <ToastContainer
+            position={position}
+            autoClose={autoClose}
+            hideProgressBar={hideProgressBar}
+            newestOnTop={newestOnTop}
+            closeOnClick={closeOnClick}
+            pauseOnFocusLoss={pauseOnFocusLoss}
+            draggable={draggable}
+            pauseOnHover={pauseOnHover}
+            closeButton={(props) => (
+                <button
+                    onClick={props.closeToast}
+                    className={`absolute top-1 right-3 text-white ${vt323.className}`}
+                    aria-label="close"
+                >
+                    X
+                </button>
+            )}
+            toastClassName={() =>
+                `${vt323.className} relative text-[22px] text-center w-[300px] 
+                 bg-black text-white font-mono border border-blue-500 rounded-md px-4 py-3 
+                 shadow-[0_0_12px_#00ffff] tracking-wider mb-6`
+            }
+            className="pb-2"
+            {...rest}
         />
     );
 }

@@ -68,8 +68,15 @@ export default function Home() {
   }, [coins, XP, user]);
 
   return (
-    <div className="flex-1 bg-gray-100">
+  <div className="relative min-h-screen flex flex-col">
+    {/* 🔹 Background Image */}
+    <div className="absolute inset-0 bg-[url('/mainmenubg.jpg')] bg-cover bg-center animate-backgroundMove opacity-20"></div>
+
+    {/* 🔹 Foreground Content */}
+    <div className="relative z-10 flex-1 flex flex-col">
       <Menu />
     </div>
-  );
+  </div>
+);
+
 }

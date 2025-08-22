@@ -1,27 +1,44 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+/* ---------------------------------
+   🎨 Font Variables (from layout.tsx)
+   --------------------------------- */
 :root {
   --font-vt323: #vt323.variable;
   --font-press-start-2p: #pressStart2P.variable;
 }
 
+/* ---------------------------------
+   🎞️ Background Animation
+   --------------------------------- */
+@keyframes scrollBg {
+  0% { background-position: 0 0; }
+  100% { background-position: -200px -200px; }
+}
+
+.animate-scroll {
+  animation: scrollBg 60s linear infinite;
+}
+
+
+/* ---------------------------------
+   🌌 Global Body Styles
+   --------------------------------- */
 body {
- background-color: #1a1a1a; /* Fallback color if GIF fails to load */
-  background-image: url('/public/pixel-city.jpeg');
-  background-size: cover; /* Scales to cover the screen */
-  background-position: center; /* Centers the animation */
-  background-repeat: no-repeat; /* Prevents tiling */
+  font-family: var(--font-press-start-2p), var(--font-vt323), cursive;
+  background-color: #1a1a1a; /* fallback */
   color: #fff;
   margin: 0;
-  image-rendering: pixelated; /* Enhances 8-bit look */
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  image-rendering: pixelated; /* Retro pixel look */
 }
 
+/* ---------------------------------
+   🎮 Game Container
+   --------------------------------- */
 .game-container {
   text-align: center;
   background-color: #333;
@@ -30,6 +47,9 @@ body {
   box-shadow: 0 0 0 4px #000;
 }
 
+/* ---------------------------------
+   🟥 Headings
+   --------------------------------- */
 h1 {
   font-size: 24px;
   margin-bottom: 20px;
@@ -38,6 +58,9 @@ h1 {
   font-family: var(--font-press-start-2p), var(--font-vt323), cursive;
 }
 
+/* ---------------------------------
+   ⬛ Game Board
+   --------------------------------- */
 .game-board {
   display: grid;
   grid-template-columns: repeat(3, 80px);
@@ -47,6 +70,9 @@ h1 {
   border: 4px solid #555;
 }
 
+/* ---------------------------------
+   🟩 Game Cells
+   --------------------------------- */
 .cell {
   width: 80px;
   height: 80px;
@@ -78,10 +104,40 @@ h1 {
   background-size: contain;
 }
 
-/* Optional: Toast container styling to match theme */
+/* ---------------------------------
+   🍞 Toast Notifications
+   --------------------------------- */
 .toast-container {
   font-family: var(--font-press-start-2p), var(--font-vt323), cursive;
   background-color: #333;
   color: #fff;
   border: 2px solid #555;
+  /* 🎮 Retro Pixel Button Style */
+.retro-btn {
+  width: 100%;
+  background-color: #6a0dad; /* purple base */
+  color: #fff;
+  font-family: var(--font-press-start-2p), var(--font-vt323), monospace;
+  font-size: 18px;
+  padding: 16px;
+  border: 4px solid #fff;
+  box-shadow: 4px 4px 0px #000;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  image-rendering: pixelated;
+}
+
+.retro-btn:hover {
+  background-color: #ff5555; /* red hover */
+  box-shadow: 6px 6px 0px #000;
+  transform: translate(-2px, -2px);
+}
+
+.retro-btn:active {
+  background-color: #333;
+  box-shadow: 2px 2px 0px #000;
+  transform: translate(2px, 2px);
+}
+
 }

@@ -10,6 +10,7 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ['@mui/material', '@mui/icons-material'],
+    optimizeCss: false, // ✅ disable lightningcss to fix build error
   },
   compress: true,
   webpack: (config, { isServer, dev }) => {

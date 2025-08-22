@@ -2,10 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { signInWithGoogle, signOutUser } from '@/services/firebase';
-
 import { useCoins, useXP, useUser, useMute, useTut } from '@/services/store';
 import TutorialModal from '../modals/TutorialModal';
-
 import { toast } from "react-toastify";
 import { useRef } from "react";
 
@@ -23,9 +21,8 @@ const Menu = () => {
 
   const router = useRouter();
 
-  // Store the last time the toast was shown
   const lastToastTimeRef = useRef(0);
-  const toastCooldown = 4500; // 4.5 seconds
+  const toastCooldown = 4500;
 
   const handleSignIn = async () => {
     try {
@@ -50,7 +47,7 @@ const Menu = () => {
     if ((mode === 'liveMatch' || mode === 'vsComputer') && !user) {
       const now = Date.now();
       if (now - lastToastTimeRef.current >= toastCooldown) {
-        toast("Please sign in!",{ autoClose: 10000 });
+        toast("Please sign in!", { autoClose: 5000 });
         lastToastTimeRef.current = now;
       }
       return;
@@ -59,39 +56,55 @@ const Menu = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="flex flex-col items-center gap-6 w-full max-w-md px-4">
-        <h1 className="text-white text-[80px]">Notakto</h1>
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      
+      {/* 🔹 ANIMATED BACKGROUND */}
+      <div
+  className="absolute inset-0 bg-[url('/mainbg.gif')] bg-contain bg-center brightness-110 animate-backgroundMove"
+ style={{ imageRendering: 'crisp-edges',   // keeps it sharp
+    backgroundSize: '100% 100%',     // forces exact fit, no stretch blur
+    backgroundRepeat: 'no-repeat' }}
 
-        <button onClick={() => startGame('vsPlayer')} className="w-full bg-blue-600 py-4 text-white text-2xl ">
-          Play vs Player
+></div>
+
+
+      {/* 🔹 MENU BOX */}
+      <div className="relative bg-black/70 border-4 border-pink-500 shadow-[4px_4px_0px_0px_#000] px-8 py-6 w-full max-w-md flex flex-col items-center gap-5">
+        
+        <h1 className="text-red-500 text-[48px] font-bold drop-shadow-[3px_3px_0px_#000] uppercase">
+          Notakto
+        </h1>
+
+        <button onClick={() => startGame('vsPlayer')} className="retro-btn">
+          ▶ Player vs Player
         </button>
 
-        <button onClick={() => startGame('vsComputer')} className="w-full bg-blue-600 py-4 text-white text-2xl ">
-          Play vs Computer
+        <button onClick={() => startGame('vsComputer')} className="retro-btn">
+          💻 Player vs Computer
         </button>
 
-        <button onClick={() => startGame('liveMatch')} className="w-full bg-blue-600 py-4 text-white text-2xl ">
-          Live Match
+        <button onClick={() => startGame('liveMatch')} className="retro-btn">
+          🌐 Live Match
         </button>
 
-        <button onClick={() => setShowTut(true)} className="w-full bg-blue-600 py-4 text-white text-2xl ">
-          Tutorial
+        <button onClick={() => setShowTut(true)} className="retro-btn">
+          📖 Tutorial
         </button>
 
         {user ? (
-          <button onClick={handleSignOut} className="w-full bg-blue-600 py-4 text-white text-2xl ">
-            Sign Out
+          <button onClick={handleSignOut} className="retro-btn">
+            🚪 Sign Out
           </button>
         ) : (
-          <button onClick={handleSignIn} className="w-full bg-blue-600 py-4 text-white text-2xl">
-            Sign In
+          <button onClick={handleSignIn} className="retro-btn">
+            🔑 Sign In
           </button>
         )}
 
-        <button onClick={() => setMute(!mute)} className="w-full bg-blue-600 py-4 text-white text-[30px]">
-          Sound: {mute ? 'Off' : 'On'}
+        <button onClick={() => setMute(!mute)} className="retro-btn">
+          🎵 Sound: {mute ? 'Off' : 'On'}
         </button>
+
         {showTut && <TutorialModal />}
       </div>
     </div>

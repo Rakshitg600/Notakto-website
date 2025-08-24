@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { BoardConfigModalProps } from '../services/types';
-import clsx from 'clsx';
+import { BoardConfigButton } from '@/components/ui/BoardConfigButton';
 
 const BoardConfigModal = ({
   visible,
@@ -21,30 +21,24 @@ const BoardConfigModal = ({
         <h2 className="text-red-600 text-[35px] ">Number of Boards</h2>
         <div className="flex flex-wrap gap-2 justify-center">
           {[1, 2, 3, 4, 5].map(num => (
-            <button
+            <BoardConfigButton
               key={num}
+              label={num}
+              isActive={selectedBoards === num}
               onClick={() => setSelectedBoards(num)}
-              className={clsx("min-w-[60px] px-4 py-2 text-white text-xl",
-                selectedBoards === num ? 'bg-red-600' : 'bg-blue-600'
-              )}
-            >
-              {num}
-            </button>
+            />
           ))}
         </div>
 
         <h2 className="text-red-600 text-[35px]">Board Size</h2>
         <div className="flex flex-wrap gap-2 justify-center">
           {[2, 3, 4, 5].map(size => (
-            <button
+            <BoardConfigButton
               key={size}
+              label={`${size}x${size}`}
+              isActive={selectedSize === size}
               onClick={() => setSelectedSize(size)}
-              className={clsx("min-w-[60px] px-4 py-2 text-white text-xl",
-                selectedSize === size ? 'bg-red-600' : 'bg-blue-600'
-              )}
-            >
-              {size}x{size}
-            </button>
+            />
           ))}
         </div>
 

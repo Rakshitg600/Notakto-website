@@ -2,13 +2,13 @@
 import { useEffect, useRef } from 'react';
 
 // Components
-import Menu from './Menu';
+import Menu from '@/app/Menu';
 
-import { useCoins, useUser, useXP, useMute } from '../services/store';
-import { initBackgroundMusic, toggleBackgroundMusic, stopBackgroundMusic } from '../services/sounds';
+import { useCoins, useUser, useXP, useMute } from '@/services/store';
+import { initBackgroundMusic, toggleBackgroundMusic, stopBackgroundMusic } from '@/services/sounds';
 
 // Firebase module
-import { onAuthStateChangedListener, saveEconomyToFirestore, loadEconomyFromFirestore } from '../services/firebase';
+import { onAuthStateChangedListener, saveEconomyToFirestore, loadEconomyFromFirestore } from '@/services/firebase';
 
 export default function Home() {
   const mute = useMute((state) => state.mute);

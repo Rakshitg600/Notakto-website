@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import { BoardConfigModalProps } from '../services/types';
 // Standardise components
-import { BoardConfigButton } from '@/components/ui/BoardConfigButton';
-import { BoardActionButton } from '@/components/ui/BoardActionButton';
+import { BoardConfigButton } from '@/components/ui/Buttons/BoardConfigButton';
+import { BoardActionButton } from '@/components/ui/Buttons/BoardActionButton';
 
 const BoardConfigModal = ({
   visible,

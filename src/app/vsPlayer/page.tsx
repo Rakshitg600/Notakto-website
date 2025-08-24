@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import PlayerNamesModal from '@/modals/PlayerNamesModal';
 import WinnerModal from '@/modals/WinnerModal';
 import BoardConfigModal from '@/modals/BoardConfigModal';
-import { SettingButton } from '@/components/ui/SettingButton';
+import { SettingButton } from '@/components/ui/Buttons/SettingButton';
 
 const Game = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

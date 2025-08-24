@@ -14,7 +14,7 @@ import DifficultyModal from '@/modals/DifficultyModal';
 import { toast } from "react-toastify";
 import { useToastCooldown } from "@/components/hooks/useToastCooldown";
 import { handleBuyCoins } from '@/services/payment';
-import { SettingButton } from '@/components/ui/SettingButton';
+import { SettingButton } from '@/components/ui/Buttons/SettingButton';
 import { createGame, makeMove, resetGame, updateConfig, undoMove, skipMove } from '@/services/game-apis';
 
 const Game = () => {

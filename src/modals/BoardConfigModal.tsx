@@ -1,7 +1,9 @@
 'use client'
 import { useState } from 'react';
 import { BoardConfigModalProps } from '../services/types';
+// Standardise components
 import { BoardConfigButton } from '@/components/ui/BoardConfigButton';
+import { BoardActionButton } from '@/components/ui/BoardActionButton';
 
 const BoardConfigModal = ({
   visible,
@@ -43,18 +45,14 @@ const BoardConfigModal = ({
         </div>
 
         <div className="flex gap-4 pt-2">
-          <button
-            onClick={onCancel}
-            className="flex-1 py-3 bg-blue-600 text-white text-xl hover:bg-blue-700"
-          >
+          
+          <BoardActionButton onClick={onCancel}>
             Cancel
-          </button>
-          <button
-            onClick={() => onConfirm(selectedBoards, selectedSize)}
-            className="flex-1 py-3 bg-blue-600 text-white text-xl hover:bg-blue-700"
-          >
+          </BoardActionButton>
+          
+          <BoardActionButton onClick={() => onConfirm(selectedBoards, selectedSize)}>
             Apply
-          </button>
+          </BoardActionButton>
         </div>
       </div>
     </div>

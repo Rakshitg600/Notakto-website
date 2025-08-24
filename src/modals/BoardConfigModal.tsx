@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react';
 import { BoardConfigModalProps } from '../services/types';
-import clsx from 'clsx';
 import { BoardConfigButton } from '@/components/ui/BoardConfigButton';
 
 const BoardConfigModal = ({

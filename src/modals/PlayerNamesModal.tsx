@@ -36,20 +36,20 @@ const PlayerNamesModal = ({ visible, onSubmit, initialNames = ['Player 1', 'Play
     <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center">
       <div className="bg-black w-[80%] max-w-md p-6 text-center shadow-lg">
         <h2 className="text-red-500 text-3xl mb-6">Enter Player Names</h2>
+        <div className='mb-6 gap-4 flex flex-col'>
 
-        <PlayerInput
-          value={player1}
-          onChange={(e) => setPlayer1(e.target.value)}
-          placeholder="Player 1 Name"
-          className="mb-4"
-        />
+          <PlayerInput
+            value={player1}
+            onChange={(e) => setPlayer1(e.target.value)}
+            placeholder="Player 1 Name"
+          />
 
-        <PlayerInput
-          value={player2}
-          onChange={(e) => setPlayer2(e.target.value)}
-          placeholder="Player 2 Name"
-          className="mb-6"
-        />
+          <PlayerInput
+            value={player2}
+            onChange={(e) => setPlayer2(e.target.value)}
+            placeholder="Player 2 Name"
+          />
+        </div>
 
         <button
           onClick={handleSubmit}

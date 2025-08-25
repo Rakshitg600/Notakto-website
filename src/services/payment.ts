@@ -4,15 +4,17 @@ export const handleBuyCoins = async (
     setIsProcessingPayment: (val: boolean) => void,
     canShowToast: () => boolean,
     triggerToastCooldown: () => void,
-    setCoins: (val: number) => void,
-    Coins: number
+    idToken: string | undefined,
 ) => {
     setIsProcessingPayment(true);
 
     try {
         const response = await fetch('/api/create-payment', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
+            },
             body: JSON.stringify({
                 amount: "1.00",
                 currency: "INR",
@@ -42,7 +44,6 @@ export const handleBuyCoins = async (
                         toast('✅ Payment successful! 100 coins added to your account.', { autoClose: 4500 });
                         triggerToastCooldown();
                     }
-                    setCoins(Coins + 100);
                 },
                 (reason) => {
                     if (canShowToast()) {

@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     }
     
     gameState.boards = gameState.gameHistory[gameState.gameHistory.length - 3];
-    gameState.gameHistory = gameState.gameHistory.slice(0, -2);
+    gameState.gameHistory = gameState.gameHistory.slice(0, -2); //TODO: instead of deleting last two, we should add a new state to history equal to current state - 2, so that redo can be implemented later and also to ensure append only history
     gameState.currentPlayer = 1;
     
     gameSessions.set(sessionId, gameState);

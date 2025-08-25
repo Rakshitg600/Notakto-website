@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { User } from 'firebase/auth';
 
 type userStore = {
@@ -23,29 +22,15 @@ type XPStore = {
   setXP: (newXP: number) => void;
 };
 
-export const useCoins = create<CoinStore>()(
-  persist(
-    (set) => ({
-      coins: 1000,
-      setCoins: (newCoins: number) => set({ coins: newCoins }),
-    }),
-    {
-      name: 'coins-storage', // key in localStorage
-    }
-  )
-);
+export const useCoins = create<CoinStore>((set) => ({
+  coins: 0,
+  setCoins: (newCoins: number) => set({ coins: newCoins }),
+}));
 
-export const useXP = create<XPStore>()(
-  persist(
-    (set) => ({
-      XP: 0,
-      setXP: (newXP: number) => set({ XP: newXP }),
-    }),
-    {
-      name: 'xp-storage', // key in localStorage
-    }
-  )
-);
+export const useXP = create<XPStore>((set) => ({
+  XP: 0,
+  setXP: (newXP: number) => set({ XP: newXP }),
+}));
 export const useUser = create<userStore>((set) => ({
   user: null,
   setUser: (newUser) => set({ user: newUser }),

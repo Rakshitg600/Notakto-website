@@ -5,11 +5,10 @@ import Board from './Board';
 import { BoardSize, BoardState, DifficultyLevel, BoardNumber } from '@/services/types';
 import { isBoardDead } from '@/services/logic';
 import { playMoveSound, playWinSound } from '@/services/sounds';
-import { useMute, useUser } from '@/services/store';
+import { useMute, useUser, useCoins, useXP } from '@/services/store';
 import { useRouter } from 'next/navigation';
 import WinnerModal from '@/modals/WinnerModal';
 import BoardConfigModal from '@/modals/BoardConfigModal';
-import { useCoins, useXP } from '@/services/store';
 import DifficultyModal from '@/modals/DifficultyModal';
 import { toast } from "react-toastify";
 import { useToastCooldown } from "@/components/hooks/useToastCooldown";
@@ -38,7 +37,6 @@ const Game = () => {
     const Coins = useCoins((state) => state.coins);
     const setCoins = useCoins((state) => state.setCoins);
     const XP = useXP((state) => state.XP);
-    const setXP = useXP((state) => state.setXP);
     const user = useUser((state) => state.user);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const { canShowToast, triggerToastCooldown } = useToastCooldown(4000);
@@ -85,8 +83,6 @@ const Game = () => {
                     playMoveSound(mute);
 
                     if (data.gameOver) {
-                        if (data.gameState.coins) setCoins(Coins + data.gameState.coins);
-                        if (data.gameState.xp) setXP(XP + data.gameState.xp);
                         setWinner(data.gameState.winner);
                         setShowWinnerModal(true);
                         playWinSound(mute);
@@ -144,7 +140,6 @@ const Game = () => {
                     setBoards(data.gameState.boards);
                     setCurrentPlayer(data.gameState.currentPlayer);
                     setGameHistory(data.gameState.gameHistory);
-                    setCoins(Coins - 100);
                 } else if ('error' in data) {
                     toast.error(data.error || 'Failed to undo move');
                 } else {
@@ -172,7 +167,6 @@ const Game = () => {
                     setBoards(data.gameState.boards);
                     setCurrentPlayer(data.gameState.currentPlayer);
                     setGameHistory(data.gameState.gameHistory);
-                    setCoins(Coins - 200);
                 } else if ('error' in data) {
                     toast.error(data.error || 'Failed to skip move');
                 } else {
@@ -278,7 +272,7 @@ const Game = () => {
                         <SettingButton onClick={() => { setShowBoardConfig(true); setIsMenuOpen(false); }}>Game Configuration</SettingButton>
                         <SettingButton onClick={() => { handleUndo(); setIsMenuOpen(false); }} disabled={Coins < 100}>Undo (100 coins)</SettingButton>
                         <SettingButton onClick={() => { handleSkip(); setIsMenuOpen(false); }} disabled={Coins < 200}>Skip a Move (200 coins)</SettingButton>
-                        <SettingButton onClick={() => handleBuyCoins(setIsProcessingPayment, canShowToast, triggerToastCooldown, setCoins, Coins)} disabled={isProcessingPayment} loading={isProcessingPayment}>Buy Coins (100)</SettingButton>
+                        <SettingButton onClick={async () => { const token = await user?.getIdToken(); handleBuyCoins(setIsProcessingPayment, canShowToast, triggerToastCooldown, token); }} disabled={isProcessingPayment} loading={isProcessingPayment}>Buy Coins (100)</SettingButton>
                         <SettingButton onClick={() => { setShowDifficultyModal(true); setIsMenuOpen(false); }}>AI Level: {difficulty}</SettingButton>
                         <SettingButton onClick={() => setMute(!mute)}>Sound: {mute ? 'Off' : 'On'}</SettingButton>
                         <SettingButton onClick={() => router.push('/')}>Main Menu</SettingButton>

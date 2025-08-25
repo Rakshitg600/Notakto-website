@@ -2,15 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 import { signInWithGoogle, signOutUser } from '@/services/firebase';
-import { useCoins, useXP, useUser, useMute, useTut } from '@/services/store';
+import { useUser, useMute, useTut } from '@/services/store';
 import TutorialModal from '../modals/TutorialModal';
 import { toast } from "react-toastify";
 import { useToastCooldown } from "@/components/hooks/useToastCooldown";
 import { MenuButton } from '@/components/ui/MenuButton';
 
 const Menu = () => {
-  const setCoins = useCoins((state) => state.setCoins);
-  const setXP = useXP((state) => state.setXP);
   const user = useUser((state) => state.user);
   const setUser = useUser((state) => state.setUser);
   const mute = useMute((state) => state.mute);
@@ -32,8 +30,6 @@ const Menu = () => {
   const handleSignOut = async () => {
     try {
       await signOutUser();
-      setCoins(1000);
-      setXP(0);
       setUser(null);
     } catch (error) {
       console.error('Sign out error:', error);
